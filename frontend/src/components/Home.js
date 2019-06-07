@@ -74,7 +74,6 @@ function Search(field){
     if (field.length > 2 && result.length > 0) {   
         result[j+1]=<li className="listaRisultati" key={j+1}>Cerca {field} tra le facoltà <a key={j+1} href={field}>Cerca</a></li>
         result[j+2]=<li className="listaRisultati" key={j+2}>Cerca {field} tra le strutture <a key={j+1} href={field}>Cerca</a></li>
-        result[j+3]=<li className="listaRisultati" key={j+3}>Cerca {field} tra i corsi di laurea <a key={j+1} href={field}>Cerca</a></li>
     }
 
     return (
