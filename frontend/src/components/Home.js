@@ -1,21 +1,7 @@
 import React, { Component } from 'react'
-import '../Home.css'
-
-
-let docenti = []
-
-function getDocenti() {
-
-    fetch('http://localhost:3000/docenti/')
-        .then(res => {
-            return res.json();
-        })
-        .then(json => { 
-            docenti = json
-        });
-
-    return docenti
-}
+import '../css/Home.css'
+import getSuggestions from '../getSuggestions'
+import axios from 'axios'
 
 class Home extends Component {
 
@@ -23,62 +9,45 @@ class Home extends Component {
         super()
         this.state = {
             search: "",
-            users: [],
+            docenti: [],
         }
         this.handleChange = this.handleChange.bind(this)
     }
 
-    handleChange(event) {
-        this.setState({
+    async handleChange(event) {
+
+        await this.setState({
             search: event.target.value
         })
+
+        if (this.state.search.length > 2) { 
+            await axios.get(process.env.REACT_APP_URL_SERVER + this.state.search.trimLeft())
+            .then(res => {
+                // console.log(res.data)
+                this.setState({ docenti: res.data })
+            })
+            .catch(error => {
+                console.log("ERRORE: " + error);
+            })
+        }
     }
-   
-    render() { 
+
+    render() {
         return (
             <>
                 <div className="main-content">
-                    <form className="casella_testo" action="http://localhost:3001/lista_docenti">
-                        <input type="text" placeholder="Inserisci il docente che vuoi cercare" name="search" onChange={this.handleChange} autoComplete="off" spellCheck="false" />
-                        <button type="submit" action="http://localhost:3001/lista_docenti"><i className="fa fa-search"></i></button>                       
+                    <form className="casella_testo" action={process.env.REACT_APP_URL_BASE + "lista_docenti/"}>
+                        <input type="text" placeholder="Inserisci il docente che vuoi cercare" name="search" onChange={this.handleChange} autoComplete="off" />
+                        <button type="submit" action={process.env.REACT_APP_URL_BASE + "lista_docenti/"}><i className="fa fa-search"></i></button>                       
                         <ul className="ulRisultati">
-                            {Search(this.state.search)}
+                                {getSuggestions(this.state.docenti, this.state.search)}
                         </ul>                        
                     </form>
                 </div>
-
-
             </>
         )
     }
-}
 
-function Search(field){
-
-    let users =  getDocenti(field);
-    let result = [];
-    let size = users.length;
-    let j = 0;
-
-    for ( let i = 0 ; i < size ; i++ ) {
-        if ( (users[i].nom_docente.includes(field.toUpperCase()) || users[i].cog_docente.includes(field.toUpperCase()) || users[i].des_facolta.includes(field.toUpperCase())) && result.length < 3 && field.length > 2 ) {       
-            if ( users[i].des_facolta === "" ) {
-                result[j] = <li className="listaRisultati" key={i}>{ users[i].nom_docente + " " + users[i].cog_docente} <a key={j} href={users[i].cog_docente + "-" + users[i].nom_docente }>Vai al profilo</a></li>;
-            } else {
-                result[j] = <li className="listaRisultati" key={i}>{ users[i].nom_docente + " " + users[i].cog_docente + "  |  Insegnante di: " + users[i].des_facolta } <a key={j} href={users[i].cog_docente + "-" + users[i].nom_docente }>Vai al profilo</a></li>;
-            }
-        }
-        j++;
-    }
-
-    if (field.length > 2 && result.length > 0) {   
-        result[j+1]=<li className="listaRisultati" key={j+1}>Cerca {field} tra le facoltà <a key={j+1} href={field}>Cerca</a></li>
-        result[j+2]=<li className="listaRisultati" key={j+2}>Cerca {field} tra le strutture <a key={j+1} href={field}>Cerca</a></li>
-    }
-
-    return (
-        result
-    );
 }
 
 export default Home

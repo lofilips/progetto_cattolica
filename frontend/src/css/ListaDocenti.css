@@ -1,0 +1,32 @@
+.pagRicerca {
+    min-height: 1000px;
+    padding: 10px;
+}
+
+.buttonHidden {
+    visibility: hidden;
+    padding: 15px;
+    margin: 10px;
+}
+
+.buttonVisible {
+    visibility: visible;
+    padding: 15px;
+    margin: 10px;
+}
+
+.risRicerca {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.carta {
+    margin-top: 15px;
+}
+
+.fotoProfilo {
+    width: 150px;
+    height: 170px;
+    margin: 10px;
+    border: solid grey 2px;
+}

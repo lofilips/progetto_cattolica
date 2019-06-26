@@ -1,6 +1,4 @@
-
-
- { "docenti" :   [
+{ "docenti" :   [
        
         {
           "cod_docente" : "13319",

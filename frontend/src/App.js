@@ -7,7 +7,7 @@ import Layout from './components/Layout'
 import NavigationBar from './components/NavigationBar'
 import ListaDocenti from './components/ListaDocenti'
 import Footer from './components/Footer'
-
+import ProfiloDocente from './components/ProfiloDocente'
 
 class App extends Component {
 
@@ -18,8 +18,9 @@ class App extends Component {
         <Layout>
           <Router>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/lista_docenti" component={ListaDocenti} />
+              <Route exact path="/docenti" component = {Home} />
+              <Route path="/docenti/lista_docenti" component = {ListaDocenti} />
+              <Route path="/docenti/profilo_docente" component = {ProfiloDocente} />
               <Route component={NoMatch} />
             </Switch>
           </Router>
@@ -30,7 +31,5 @@ class App extends Component {
   }
 
 }
-
-
 
 export default App;

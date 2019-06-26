@@ -7,6 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const docentiDB = require('./service/docenti-db-factory').DocentiDB();
+
 var app = express();
 
 // view engine setup
@@ -37,5 +39,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// console.log(docentiDB.cercaDocenti('aa'));
 
 module.exports = app;
