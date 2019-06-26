@@ -12,7 +12,7 @@ function getSuggestions(docenti, stringaRicerca){
             if ( docenti[i].des_facolta === "" ) {
                 result[j] = <li className="listaRisultati" key={i}>{ docenti[i].nom_docente + " " + docenti[i].cog_docente} <a key={j} href={docenti[i].cog_docente + "-" + docenti[i].nom_docente }>Vai al profilo</a></li>;
             } else {
-                result[j] = <li className="listaRisultati" key={i}>{ docenti[i].nom_docente + " " + docenti[i].cog_docente + "  |  Insegnante di: " + docenti[i].des_facolta } <a key={j} href={url + "/profilo_docente/" + docenti[i].cod_docente}>Vai al profilo</a></li>;
+                result[j] = <li className="listaRisultati" key={i}>{ docenti[i].nom_docente + " " + docenti[i].cog_docente + "  |  Insegnante di: " + docenti[i].des_facolta } <a key={j} href={url + "profilo_docente/" + docenti[i].cod_docente}>Vai al profilo</a></li>;
             }
             j++
         }
