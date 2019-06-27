@@ -80,13 +80,14 @@ class ListaDocenti extends React.Component {
             })
         }
 
-        var rest, mime, client; 
+        let rest, mime, client; 
         rest = require('rest'); 
         mime = require('rest/interceptor/mime'); 
         client = rest.wrap(mime); 
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 
         for (let i = 0 ; i < this.state.docenti.length ; i++) { 
-            var response = await client({ path: process.env.REACT_APP_URL_FOTO_DOCENTI + this.state.docenti[i].cod_docente }); 
+            let response = await client({ path: proxyUrl + process.env.REACT_APP_URL_FOTO_DOCENTI + this.state.docenti[i].cod_docente }); 
             if (response.entity.base64Foto === null){ 
                 this.state.docenti[i].cod_foto = require('../assets/foto_vuota.jpg') 
                 this.state.immagine[i] = i 
@@ -95,7 +96,7 @@ class ListaDocenti extends React.Component {
                 this.state.immagine[i] = i 
             }  
             // console.log("Immagini caricate: " + this.state.immagine.length)  
-            this.forceUpdate() 
+            this.forceUpdate()
         }
 
     }

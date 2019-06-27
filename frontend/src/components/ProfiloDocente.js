@@ -33,18 +33,21 @@ class ProfiloDocente extends React.Component {
             rest = require('rest');
             mime = require('rest/interceptor/mime');
         
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+
             client = rest.wrap(mime);
-            var response = await client({ path: process.env.REACT_APP_URL_FOTO_DOCENTI + this.state.docenti[i].cod_docente });
-            if(response.entity.base64Foto === null){
+            var response = await client({ path: proxyUrl + process.env.REACT_APP_URL_FOTO_DOCENTI + this.state.docenti[i].cod_docente });
+            if (response.entity.base64Foto === null) {
                 this.state.docenti[i].cod_foto = require('../assets/foto_vuota.jpg')
                 this.setState({immagine: true})
-            }else{
-                this.state.docenti[i].cod_foto =  response.entity.base64Foto
+            } else {
+                this.state.docenti[i].cod_foto = response.entity.base64Foto
                 this.setState({immagine: true})
             } 
             // console.log("Immagini caricata: " + this.state.immagine) 
             this.forceUpdate()
         }
+
     }
 
     render() {
@@ -79,7 +82,6 @@ class ProfiloDocente extends React.Component {
                 </Card>
             )
         }
-
 
         if (this.state.immagine) {
             return (

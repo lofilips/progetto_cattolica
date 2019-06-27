@@ -20,16 +20,17 @@ class Home extends Component {
             search: event.target.value
         })
 
-        if (this.state.search.length > 2) { 
+        if (this.state.search.length > 2) {
             await axios.get(process.env.REACT_APP_URL_SERVER + this.state.search.trimLeft())
             .then(res => {
                 // console.log(res.data)
                 this.setState({ docenti: res.data })
             })
             .catch(error => {
-                console.log("ERRORE: " + error);
+                console.error(error);
             })
         }
+
     }
 
     render() {
