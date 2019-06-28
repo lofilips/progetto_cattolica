@@ -62,4 +62,4 @@ app.get('/docenti/profilo_docente/:code', (req, res) => {
     })
 })
 
-app.listen(4000, () => console.log('Express sta ascoltando sulla porta 4000'))
+app.listen(4000)

@@ -1,16 +1,8 @@
 const DocentiDB = require('../docenti-db');
 
-const express = require('express')
 const mysql = require('mysql')
-const bodyparser = require('body-parser')
-const cors = require('cors')
 
 require('dotenv/config')
-
-const app = express()
-
-app.use(bodyparser.json())
-app.use(cors())
 
 const mysqlConnection = mysql.createConnection({
     host: process.env.HOST,
@@ -25,20 +17,13 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
     constructor() {
         super();
         console.log('USO L\'IMPLEMENTAZIONE CON MYSQL');
-    }
-
-    componentDidMount() {
-        
         mysqlConnection.connect((error) => {
             if (!error) {
-                console.log('Success! Siamo connessi a mysql')
+                console.log('Connessione a Mysql Server avvenuta con successo')
             } else {
-                console.log("Failed! Error: " + JSON.stringify(error, undefined, 2))
+                console.log("Errore di connessione: " + JSON.stringify(error, undefined, 1))
             }
         })
-        
-        app.listen(4001, () => console.log('Mysql server sta ascoltando sulla porta 4001'))
-        
     }
 
     searchProfBySurname(surname) { 

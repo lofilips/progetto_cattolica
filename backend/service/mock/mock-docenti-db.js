@@ -4,8 +4,9 @@ const fetch = require('node-fetch')
 module.exports = class MockDocentiDB extends DocentiDB {
 
     constructor() {
-        super();
-        console.log('USO L\'IMPLEMENTAZIONE CON JSON');
+        super()
+        console.log('USO L\'IMPLEMENTAZIONE CON JSON')
+        console.log('Eseguire lo script \'JSON Server.bat\' presente nella cartella \'script_utilita\'')
     }
     
     searchProfBySurname(surname) {
