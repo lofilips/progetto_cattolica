@@ -4,5 +4,6 @@
 - Ultimare dettaglio profilo
 
 PLUS
+- Usare connection pool mysql
 - Creare dei contanier a partire dai progetti di backend e frontent 
 - Avviarli come stack docker https://docs.docker.com/engine/reference/commandline/stack/
