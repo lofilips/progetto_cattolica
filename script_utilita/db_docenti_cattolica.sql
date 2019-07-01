@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `lista_docenti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8;
 CREATE TABLE `lista_docenti` (
   `cod_docente` text,
   `cog_docente` text,
@@ -47,7 +47,7 @@ CREATE TABLE `lista_docenti` (
   `incarico_dir` text,
   `incarico_dir_eng` text,
   `ente_provenienza` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

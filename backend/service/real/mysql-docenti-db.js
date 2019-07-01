@@ -2,14 +2,17 @@ const DocentiDB = require('../docenti-db');
 
 const mysql = require('mysql')
 
-require('dotenv/config')
+require('dotenv').config()
+
+console.log(process.env.DBUSER)
 
 const mysqlConnection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
+    host: process.env.DBHOST,
+    user: process.env.DBUSER,
+    password: process.env.DBPASSWORD,
     database: process.env.DATABASE_SQL,
-    multipleStatements: true
+    multipleStatements: true,
+    insecureAuth : true
 })
 
 module.exports = class MysqlDocentiDB extends DocentiDB {
