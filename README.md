@@ -2,6 +2,7 @@
 - Verificare le query, rendendole case insensitive
 - Implementare la ricerca per insegnamenti
 - Ultimare dettaglio profilo
+- gestire errori
 
 PLUS
 - Usare connection pool mysql
