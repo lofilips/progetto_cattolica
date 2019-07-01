@@ -29,6 +29,7 @@ class Home extends Component {
             .catch(error => {
                 console.error(error);
             })
+
         }
 
     }
