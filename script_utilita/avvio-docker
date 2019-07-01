@@ -1,0 +1,4 @@
+Creazione immagine docker 
+    docker build -t devmysql:1 -f mysql-dockerfile .
+Avvio container mysql
+    docker run -e MYSQL_ROOT_PASSWORD=test -e MYSQL_DATABASE=db_docenti_cattolica -e MYSQL_USER=newuser -e MYSQL_PASSWORD=password -p 3306:3306 --name mysqldev -d devmysql:1
