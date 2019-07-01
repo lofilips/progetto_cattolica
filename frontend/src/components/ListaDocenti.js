@@ -25,7 +25,7 @@ class ListaDocenti extends React.Component {
         console.log(stringaRicerca)
         console.log(filtro)
 
-        let count = false 
+        let count = false
         do {
             count = false
             if (stringaRicerca.charAt(0) === "+") {
