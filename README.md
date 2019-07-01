@@ -1,4 +1,7 @@
-# progetto_cattolica
+# TODO progetto_cattolica
+
+Guida git https://rogerdudler.github.io/git-guide/index.it.html
+
 - Verificare le query, rendendole case insensitive
 - Implementare la ricerca per insegnamenti
 - Ultimare dettaglio profilo
