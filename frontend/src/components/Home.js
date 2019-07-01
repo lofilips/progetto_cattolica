@@ -42,10 +42,11 @@ class Home extends Component {
                         <div className="bloccaCasella">
                             <input type="text" placeholder="Inserisci il docente che vuoi cercare" name="search" onChange={this.handleChange} autoComplete="off" />
                             <button type="submit" action={process.env.REACT_APP_URL_BASE + "lista_docenti/"}><i className="fa fa-search"></i></button>   
-                        </div>                    
+                                        
                         <ul className="ulRisultati">
                                 {getSuggestions(this.state.docenti, this.state.search)}
-                        </ul>                        
+                        </ul>   
+                        </div>                         
                     </form>
                 </div>
             </>

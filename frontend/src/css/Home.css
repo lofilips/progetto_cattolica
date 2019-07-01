@@ -146,6 +146,7 @@ html, body {
     border: solid grey 1px;
     padding: 20px;
     font-size: 15px;
+    border-radius: 5px;
 }
 
 .listaRisultati a {
@@ -155,8 +156,8 @@ html, body {
 .ulRisultati{
     padding-left: 0;
     position: absolute;
-    top: 62%;
-    width: 70%;
+    top: 67px;
+    width: 100%;
 }
 
 .bloccaCasella {
