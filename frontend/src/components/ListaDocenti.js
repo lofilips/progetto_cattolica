@@ -163,6 +163,55 @@ class ListaDocenti extends React.Component {
         }
 
         if (this.state.immagine.length >= 5 || this.state.immagine.length === this.state.docenti.length) { 
+
+        if(filtro === 'struttura'){
+            if (j < this.state.index) {
+                return (
+                    <div className="pagRicerca">
+                        <br/>
+                        <h3>Risultati per "{newStringa}" in Strutture:</h3><br/>
+                        {card}<br />
+                        <center><Button variant="primary" className="buttonHidden" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <br/>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="pagRicerca">
+                        <br/>
+                        <h3>Risultati per "{stringaRicerca}" in Strutture:</h3><br/>
+                        {card}<br />
+                        <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <br/>
+                    </div>
+                )   
+            }
+        }
+
+        if(filtro === 'facolta'){
+            if (j < this.state.index) {
+                return (
+                    <div className="pagRicerca">
+                        <br/>
+                        <h3>Risultati per "{newStringa}" in facoltà:</h3><br/>
+                        {card}<br />
+                        <center><Button variant="primary" className="buttonHidden" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <br/>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="pagRicerca">
+                        <br/>
+                        <h3>Risultati per "{stringaRicerca}" in facoltà:</h3><br/>
+                        {card}<br />
+                        <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <br/>
+                    </div>
+                )   
+            }
+        }
+
         if (j < this.state.index) {
             return (
                 <div className="pagRicerca">
