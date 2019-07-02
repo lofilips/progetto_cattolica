@@ -6,7 +6,7 @@ module.exports = class MockDocentiDB extends DocentiDB {
     constructor() {
         super()
         console.log('USO L\'IMPLEMENTAZIONE CON JSON')
-        console.log('Eseguire lo script \'JSON Server.bat\' presente nella cartella \'script_utilita\'')
+        console.log('Eseguire lo script \'JSON Server.bat\' presente nella cartella \'backend\'')
     }
     
     searchProfBySurname(surname) {
