@@ -65,7 +65,7 @@ app.get('/docenti/profilo_docente/:code', (req, res) => {
 })
 
 app.get('/docenti/foto_docente/:code', (req, res) => {
-    axios.get(process.env.REACT_APP_URL_FOTO_DOCENTI + req.params.code)
+    axios.get(process.env.URL_FOTO_DOCENTI + req.params.code)
     .then(results => {
         //console.log(results.data)
         res.send(results.data)

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Card, Row, Col} from 'react-bootstrap'
 import '../css/ListaDocenti.css'
+import axios from 'axios'
 
 const url = document.location.href
 const stringaRicerca = url.split("/")[5]
@@ -27,27 +28,23 @@ class ProfiloDocente extends React.Component {
              // console.log(result)   
             })
             
-        for (let i = 0 ; i < this.state.docenti.length ; i++) {
-            var rest, mime, client;
-                
-            rest = require('rest');
-            mime = require('rest/interceptor/mime');
-        
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 
-            client = rest.wrap(mime);
-            var response = await client({ path: proxyUrl + process.env.REACT_APP_URL_FOTO_DOCENTI + this.state.docenti[i].cod_docente });
-            if (response.entity.base64Foto === null) {
-                this.state.docenti[i].cod_foto = require('../assets/foto_vuota.jpg')
-                this.setState({immagine: true})
-            } else {
-                this.state.docenti[i].cod_foto = response.entity.base64Foto
-                this.setState({immagine: true})
-            } 
-            // console.log("Immagini caricata: " + this.state.immagine) 
-            this.forceUpdate()
-        }
+        await axios.get(process.env.REACT_APP_URL_SERVER + 'foto_docente/' + this.state.docenti[0].cod_docente)
+        .then(res => {
+            console.log(res)
+            if (res.data.base64Foto === null){ 
+                this.state.docenti[0].cod_foto = require('../assets/foto_vuota.jpg') 
+                this.state.immagine = true
+            } else { 
+                this.state.docenti[0].cod_foto = res.data.base64Foto 
+                this.state.immagine = true
+            }   
+        })
+        .catch(error => {
+            console.log("ERRORE: " + error);
+        })
 
+        this.forceUpdate()
     }
 
     render() {
