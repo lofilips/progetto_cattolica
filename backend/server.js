@@ -1,7 +1,9 @@
+const axios = require('axios')
 const docentiDB = require('./service/docenti-db-factory').DocentiDB();
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+
 
 const app = express()
 
@@ -60,6 +62,18 @@ app.get('/docenti/profilo_docente/:code', (req, res) => {
     .catch(err => {
         console.log('Promise rejection error: ' + err)
     })
+})
+
+app.get('/docenti/foto_docente/:code', (req, res) => {
+    axios.get(process.env.REACT_APP_URL_FOTO_DOCENTI + req.params.code)
+    .then(results => {
+        //console.log(results.data)
+        res.send(results.data)
+    })           
+    .catch(error => {
+        console.log("ERRORE: " + error);
+    })
+
 })
 
 app.listen(4000)
