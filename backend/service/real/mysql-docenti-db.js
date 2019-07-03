@@ -24,7 +24,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
 
     searchProfBySurname(surname) { 
         return new Promise((resolve, reject) => {
-            knex.from('lista_docenti').select('*').where(knex.raw("CONCAT(cog_docente, ' ', nom_docente)"), 'like', '%' + surname + '%').orWhere(knex.raw("CONCAT(nom_docente, ' ', cog_docente)"), 'like', '%' + surname + '%')
+            knex.select('*').from('lista_docenti').where(knex.raw("CONCAT(cog_docente, ' ', nom_docente)"), 'like', '%' + surname + '%').orWhere(knex.raw("CONCAT(nom_docente, ' ', cog_docente)"), 'like', '%' + surname + '%')
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
@@ -38,7 +38,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
 
     searchProfByStructure(structure) { 
         return new Promise((resolve, reject) => {
-            knex.from('lista_docenti').select('*').where('des_struttura_aff', 'like', '%' + structure + '%')
+            knex.select('*').from('lista_docenti').where('des_struttura_aff', 'like', '%' + structure + '%')
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
@@ -52,7 +52,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
 
     searchProfByCourse(course) { 
         return new Promise((resolve, reject) => {
-            knex.from('lista_docenti').select('*').where('des_facolta', 'like', '%' + course + '%')
+            knex.select('*').from('lista_docenti').where('des_facolta', 'like', '%' + course + '%')
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
@@ -66,7 +66,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
 
     searchProfByCode(code) { 
         return new Promise((resolve, reject) => {
-            knex.from('lista_docenti').select('*').where('cod_docente', 'like', '%' + code + '%')
+            knex.select('*').from('lista_docenti').where('cod_docente', 'like', '%' + code + '%')
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
