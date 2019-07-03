@@ -78,4 +78,18 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
         })
     }
 
+    searchProfByTeaching(teach) { 
+        return new Promise((resolve, reject) => {
+            knex.select('*').from('conferimenti').where('DES_INSEGNAMENTO_ITA', 'like', '%' + teach + '%')
+            .then(rows => {
+                if (rows === undefined) {
+                    reject(new Error("Rows is undefined"))
+                } else {
+                    resolve(rows)
+                }
+            })
+            .catch(error => console.log('ERRORE: ' + error))
+        })
+    }
+
 }

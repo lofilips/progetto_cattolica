@@ -47,7 +47,7 @@ class ListaDocenti extends React.Component {
             }
         } while (count === true)
 
-        if (filtro !== 'struttura' && filtro !== 'facolta' ) { 
+        if (filtro !== 'struttura' && filtro !== 'facolta' && filtro !== 'insegnamenti') { 
             await axios.get(process.env.REACT_APP_URL_SERVER + stringaRicerca)
             .then(res => {
                 console.log(res.data)
@@ -78,6 +78,18 @@ class ListaDocenti extends React.Component {
             .catch(error => {
                 console.log("ERRORE: " + error);
             })
+        }
+
+        if (filtro === 'insegnamenti') { 
+                await axios.get(process.env.REACT_APP_URL_SERVER + 'insegnamenti/' + stringaRicerca)
+                .then(res => {
+                    console.log(res.data)
+                    this.setState({ docenti: res.data })
+                })
+                .catch(error => {
+                    console.log("ERRORE: " + error);
+                })
+
         }
 
         for (let i = 0 ; i < this.state.docenti.length ; i++) { 
@@ -123,6 +135,9 @@ class ListaDocenti extends React.Component {
 
         while(newStringa.includes("+")){
             newStringa = newStringa.replace("+", " ")
+        }
+        while(newStringa.includes("%20")){
+            newStringa = newStringa.replace("%20", " ")
         }
         while(newStringa.includes("%27")){
             newStringa = newStringa.replace("%27", "'")
@@ -179,7 +194,7 @@ class ListaDocenti extends React.Component {
                 return (
                     <div className="pagRicerca">
                         <br/>
-                        <h3>Risultati per "{stringaRicerca}" in Strutture:</h3><br/>
+                        <h3>Risultati per "{newStringa}" in Strutture:</h3><br/>
                         {card}<br />
                         <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
                         <br/>
@@ -203,7 +218,31 @@ class ListaDocenti extends React.Component {
                 return (
                     <div className="pagRicerca">
                         <br/>
-                        <h3>Risultati per "{stringaRicerca}" in facoltà:</h3><br/>
+                        <h3>Risultati per "{newStringa}" in facoltà:</h3><br/>
+                        {card}<br />
+                        <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <br/>
+                    </div>
+                )   
+            }
+        }
+
+        if(filtro === 'insegnamenti'){
+            if (j < this.state.index) {
+                return (
+                    <div className="pagRicerca">
+                        <br/>
+                        <h3>Risultati per "{newStringa}" in insegnamenti:</h3><br/>
+                        {card}<br />
+                        <center><Button variant="primary" className="buttonHidden" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <br/>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="pagRicerca">
+                        <br/>
+                        <h3>Risultati per "{newStringa}" in insegnamenti:</h3><br/>
                         {card}<br />
                         <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
                         <br/>
@@ -226,7 +265,7 @@ class ListaDocenti extends React.Component {
             return (
                 <div className="pagRicerca">
                     <br/>
-                    <h3>Risultati per "{stringaRicerca}" in Docenti:</h3><br/>
+                    <h3>Risultati per "{newStringa}" in Docenti:</h3><br/>
                     {card}<br />
                     <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
                     <br/>

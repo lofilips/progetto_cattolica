@@ -7,7 +7,7 @@ function Footer() {
         <div className="footer">
         <Row>
             <Col sm="0" lg="1"></Col>
-            <Col sm="2" lg="2"><img src={require('../assets/logo2.jpg')} alt="Non funziona" />
+            <Col sm="2" lg="2"><a href="/docenti"><img src={require('../assets/logo2.jpg')} alt="" /></a>
             </Col>
             <Col sm="2" lg="2">
                 <a className="footer-links" href="/">CONTATTI</a>

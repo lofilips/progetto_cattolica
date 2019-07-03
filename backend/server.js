@@ -64,6 +64,17 @@ app.get('/docenti/profilo_docente/:code', (req, res) => {
     })
 })
 
+app.get('/docenti/insegnamenti/:teach', (req, res) => {
+    docentiDB.searchProfByTeaching(req.params.teach)
+    .then(results => {
+        console.log(results.data)
+        res.send(results)
+    })
+    .catch(err => {
+        console.log('Promise rejection error: ' + err)
+    })
+})
+
 app.get('/docenti/foto_docente/:code', (req, res) => {
     axios.get(process.env.URL_FOTO_DOCENTI + req.params.code)
     .then(results => {

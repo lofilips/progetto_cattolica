@@ -21,6 +21,7 @@ function getSuggestions(docenti, stringaRicerca){
     if (stringaRicerca.trimLeft().length > 2) {   
         result[j+1]=<li className="listaRisultati" key={j+1}>Cerca {stringaRicerca} tra le facoltà <a key={j+1} href={url + "lista_docenti/facolta/f=" + stringaRicerca}>Cerca</a></li>
         result[j+2]=<li className="listaRisultati" key={j+2}>Cerca {stringaRicerca} tra le strutture <a key={j+2} href={url + "lista_docenti/struttura/s=" + stringaRicerca}>Cerca</a></li>
+        result[j+3]=<li className="listaRisultati" key={j+3}>Cerca {stringaRicerca} tra gli Insegnamenti <a key={j+3} href={url + "lista_docenti/insegnamenti/i=" + stringaRicerca}>Cerca</a></li>
     }
 
     return (
