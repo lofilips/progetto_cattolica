@@ -4,7 +4,7 @@ Guida git https://rogerdudler.github.io/git-guide/index.it.html
 
 - Verificare le query, rendendole case insensitive--------------------------------------------------------------------FATTO -
         (MySql è case insensitive se si usano gli operatori WHERE e LIKE)
-- Implementare la ricerca per insegnamenti---------------------------------------------------------------------------FATTO -
+- Implementare la ricerca per insegnamenti-------------------------------------------------------------------------FATTO -
 - Ultimare dettaglio profilo-------------------------------------------------------------------------------------------DA FARE -
 - gestire errori---------------------------------------------------------------------------------------------------------DA FARE -
 
