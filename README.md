@@ -11,4 +11,4 @@ Guida git https://rogerdudler.github.io/git-guide/index.it.html
 PLUS
 - Usare connection pool mysql---------------------------------------------------------------------------------------FATTO -
 - Creare dei contanier a partire dai progetti di backend e frontent-------------------------------------------------DA FARE -
-- Avviarli come stack docker https://docs.docker.com/engine/reference/commandline/stack/ ------------------DA FARE -
+- Avviarli come stack docker https://docs.docker.com/engine/reference/commandline/stack/  ------------------DA FARE -
