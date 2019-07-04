@@ -1,0 +1,28 @@
+.fotoProfilo {
+    width: 250px;
+    height: 300px;
+    margin: 10px;
+    border: solid grey 2px;
+}
+
+.pagRicerca {
+    min-height: 1000px;
+    padding: 10px;
+}
+
+#profilo {
+    min-height: 70vh;
+    padding-top: 5vh;
+}
+
+#sezioni {
+
+}
+
+#contenuto {
+    
+}
+
+a {
+    text-decoration: none !important;
+}
