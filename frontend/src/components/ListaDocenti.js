@@ -81,23 +81,21 @@ class ListaDocenti extends React.Component {
         }
 
         if (filtro === 'insegnamenti') { 
-                await axios.get(process.env.REACT_APP_URL_SERVER + 'insegnamenti/' + stringaRicerca)
-                .then(res => {
-                    console.log(res.data)
-                    this.setState({ docenti: res.data })
-                })
-                .catch(error => {
-                    console.log("ERRORE: " + error);
-                })
-
+            await axios.get(process.env.REACT_APP_URL_SERVER + 'insegnamenti/' + stringaRicerca)
+            .then(res => {
+                console.log(res.data)
+                this.setState({ docenti: res.data })
+            })
+            .catch(error => {
+                console.log("ERRORE: " + error);
+            })
         }
 
         for (let i = 0 ; i < this.state.docenti.length ; i++) { 
-
             await axios.get(process.env.REACT_APP_URL_SERVER + 'foto_docente/' + this.state.docenti[i].cod_docente)
             .then(res => {
                 //console.log(res)
-                if (res.data.base64Foto === null){ 
+                if (res.data.base64Foto === null) { 
                     this.state.docenti[i].cod_foto = require('../assets/foto_vuota.jpg') 
                     this.state.immagine[i] = i 
                 } else { 
@@ -105,17 +103,14 @@ class ListaDocenti extends React.Component {
                     this.state.immagine[i] = i 
                 }   
                 this.forceUpdate()
-
             })
             .catch(error => {
                 console.log("ERRORE: " + error);
-            })
- 
+            }) 
         }
-
     }
 
-    caricaAltri(){
+    caricaAltri() {
         this.setState({
             index: this.state.index + 10
         })
@@ -133,31 +128,31 @@ class ListaDocenti extends React.Component {
             }
         }
 
-        while(newStringa.includes("+")){
+        while (newStringa.includes("+")) {
             newStringa = newStringa.replace("+", " ")
         }
-        while(newStringa.includes("%20")){
+        while (newStringa.includes("%20")) {
             newStringa = newStringa.replace("%20", " ")
         }
-        while(newStringa.includes("%27")){
+        while (newStringa.includes("%27")) {
             newStringa = newStringa.replace("%27", "'")
         }
-        while(newStringa.includes("%C3%A0")){
+        while (newStringa.includes("%C3%A0")) {
             newStringa = newStringa.replace("%C3%A0", "à")
         }
-        while(newStringa.includes("%C3%A8")){
+        while (newStringa.includes("%C3%A8")) {
             newStringa = newStringa.replace("%C3%A8", "è")
         }
-        while(newStringa.includes("%C3%A9")){
+        while (newStringa.includes("%C3%A9")) {
             newStringa = newStringa.replace("%C3%A9", "é")
         }
-        while(newStringa.includes("%C3%AC")){
+        while (newStringa.includes("%C3%AC")) {
             newStringa = newStringa.replace("%C3%AC", "ì")
         }
-        while(newStringa.includes("%C3%B2")){
+        while (newStringa.includes("%C3%B2")) {
             newStringa = newStringa.replace("%C3%B2", "ò")
         }
-        while(newStringa.includes("%C3%B9")){
+        while (newStringa.includes("%C3%B9")) {
             newStringa = newStringa.replace("%C3%B9", "ù")
         }
 
@@ -179,103 +174,65 @@ class ListaDocenti extends React.Component {
 
         if (this.state.immagine.length >= 5 || this.state.immagine.length === this.state.docenti.length) { 
 
-        if(filtro === 'struttura'){
+            let renderClass
+            
             if (j < this.state.index) {
+                renderClass = 'buttonHidden'
+            } else {
+                renderClass = 'buttonVisible'
+            }
+
+            if (filtro === 'struttura') {            
                 return (
                     <div className="pagRicerca">
                         <br/>
                         <h3>Risultati per "{newStringa}" in Strutture:</h3><br/>
                         {card}<br />
-                        <center><Button variant="primary" className="buttonHidden" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <center><Button variant="primary" className={renderClass} onClick={this.caricaAltri}>Carica altri</Button></center>
                         <br/>
                     </div>
                 )
-            } else {
-                return (
-                    <div className="pagRicerca">
-                        <br/>
-                        <h3>Risultati per "{newStringa}" in Strutture:</h3><br/>
-                        {card}<br />
-                        <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
-                        <br/>
-                    </div>
-                )   
             }
-        }
 
-        if(filtro === 'facolta'){
-            if (j < this.state.index) {
+            if (filtro === 'facolta') {
                 return (
                     <div className="pagRicerca">
                         <br/>
-                        <h3>Risultati per "{newStringa}" in facoltà:</h3><br/>
+                        <h3>Risultati per "{newStringa}" in Facoltà:</h3><br/>
                         {card}<br />
-                        <center><Button variant="primary" className="buttonHidden" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <center><Button variant="primary" className={renderClass} onClick={this.caricaAltri}>Carica altri</Button></center>
                         <br/>
                     </div>
                 )
-            } else {
-                return (
-                    <div className="pagRicerca">
-                        <br/>
-                        <h3>Risultati per "{newStringa}" in facoltà:</h3><br/>
-                        {card}<br />
-                        <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
-                        <br/>
-                    </div>
-                )   
             }
-        }
 
-        if(filtro === 'insegnamenti'){
-            if (j < this.state.index) {
+            if (filtro === 'insegnamenti') {
                 return (
                     <div className="pagRicerca">
                         <br/>
-                        <h3>Risultati per "{newStringa}" in insegnamenti:</h3><br/>
+                        <h3>Risultati per "{newStringa}" in Insegnamenti:</h3><br/>
                         {card}<br />
-                        <center><Button variant="primary" className="buttonHidden" onClick={this.caricaAltri}>Carica altri</Button></center>
+                        <center><Button variant="primary" className={renderClass} onClick={this.caricaAltri}>Carica altri</Button></center>
                         <br/>
                     </div>
                 )
-            } else {
-                return (
-                    <div className="pagRicerca">
-                        <br/>
-                        <h3>Risultati per "{newStringa}" in insegnamenti:</h3><br/>
-                        {card}<br />
-                        <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
-                        <br/>
-                    </div>
-                )   
             }
-        }
 
-        if (j < this.state.index) {
             return (
                 <div className="pagRicerca">
                     <br/>
                     <h3>Risultati per "{newStringa}" in Docenti:</h3><br/>
                     {card}<br />
-                    <center><Button variant="primary" className="buttonHidden" onClick={this.caricaAltri}>Carica altri</Button></center>
+                    <center><Button variant="primary" className={renderClass} onClick={this.caricaAltri}>Carica altri</Button></center>
                     <br/>
                 </div>
             )
-        } else {
-            return (
-                <div className="pagRicerca">
-                    <br/>
-                    <h3>Risultati per "{newStringa}" in Docenti:</h3><br/>
-                    {card}<br />
-                    <center><Button variant="primary" className="buttonVisible" onClick={this.caricaAltri}>Carica altri</Button></center>
-                    <br/>
-                </div>
-            )   
-        }
-        } else { 
-            return(<div className="pagRicerca" style={{paddingTop: "200px"}}><h1><center>Loading...{this.state.immagine.length*20}%</center></h1></div>) 
-        } 
 
+        } else { 
+            return (
+                <div className="pagRicerca" style={{paddingTop: "200px"}}><h1><center>Loading...{this.state.immagine.length*20}%</center></h1></div>
+            ) 
+        } 
     }
 }
 

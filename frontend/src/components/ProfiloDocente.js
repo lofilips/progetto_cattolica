@@ -150,10 +150,10 @@ class ProfiloDocente extends React.Component {
                 <Row id="profilo">
                     <Col id="sezioni" sm={2} md={2} lg={2}>
                         <ListGroup variant="flush">
-                            <a href="#"><ListGroup.Item onClick={this.profile} ref="profile" value="0" active={active0}><h4>PROFILO</h4></ListGroup.Item></a>
-                            <a href="#"><ListGroup.Item onClick={this.ins} ref="ins" value="1" active={active1}><h4>INSEGNAMENTI</h4></ListGroup.Item></a>
-                            <a href="#"><ListGroup.Item onClick={this.ric} ref="ric" value="2" active={active2}><h4>RICEVIMENTO</h4></ListGroup.Item></a>
-                            <a href="#"><ListGroup.Item onClick={this.avv} ref="avv" value="3" active={active3}><h4>AVVISI</h4></ListGroup.Item></a>
+                            <a href="#"><ListGroup.Item onClick={this.profile} ref="profile" value="0" active={active0}><h5>PROFILO</h5></ListGroup.Item></a>
+                            <a href="#"><ListGroup.Item onClick={this.ins} ref="ins" value="1" active={active1}><h5>INSEGNAMENTI</h5></ListGroup.Item></a>
+                            <a href="#"><ListGroup.Item onClick={this.ric} ref="ric" value="2" active={active2}><h5>RICEVIMENTO</h5></ListGroup.Item></a>
+                            <a href="#"><ListGroup.Item onClick={this.avv} ref="avv" value="3" active={active3}><h5>AVVISI</h5></ListGroup.Item></a>
                         </ListGroup>
                     </Col>
                     <Col id="contenuto" sm={10} md={10} lg={10}>
