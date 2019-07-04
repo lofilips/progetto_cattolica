@@ -16,3 +16,8 @@
 .nav-link:hover {
     color: rgb(209, 98, 98) !important;
 }
+
+.heady {
+    padding-top: 10px;
+    min-height: 120px;
+}

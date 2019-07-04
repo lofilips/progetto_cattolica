@@ -92,4 +92,6 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
         })
     }
 
+    searchTeachingByCode() {}
+
 }

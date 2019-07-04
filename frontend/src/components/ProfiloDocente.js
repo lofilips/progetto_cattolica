@@ -12,13 +12,29 @@ let active1 = false
 let active2 = false
 let active3 = false
 
+let profileStyle = {
+    display: 'block'
+}
+
+let insStyle = {
+    display: 'none'
+}
+
+let ricStyle = {
+    display: 'none'
+}
+
+let avvStyle = {
+    display: 'none'
+}
+
 class ProfiloDocente extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
             docenti: {},
-            immagine: false,
+            immagine: false
         }
     }
 
@@ -54,18 +70,34 @@ class ProfiloDocente extends React.Component {
 
     profile() {
         active = 0
+        profileStyle = { display : 'block' }
+        insStyle = { display : 'none' }
+        ricStyle = { display : 'none' }
+        avvStyle = { display : 'none' }
     }
 
     ins() {
         active = 1
+        profileStyle = { display : 'none' }
+        insStyle = { display : 'block' }
+        ricStyle = { display : 'none' }
+        avvStyle = { display : 'none' }
     }
 
     ric() {
         active = 2
+        profileStyle = { display : 'none' }
+        insStyle = { display : 'none' }
+        ricStyle = { display : 'block' }
+        avvStyle = { display : 'none' }
     }
 
     avv() {
         active = 3
+        profileStyle = { display : 'none' }
+        insStyle = { display : 'none' }
+        ricStyle = { display : 'none' }
+        avvStyle = { display : 'block' }
     }
 
     render() {
@@ -79,7 +111,7 @@ class ProfiloDocente extends React.Component {
                 <Card key={i}>
                     <Row>
                         <Col sm={3} md={3} lg={3}>
-                            <img className="fotoProfilo" src={this.state.docenti[i].cod_foto} alt=""/>
+                            <img className="fotoProfiloD" src={this.state.docenti[i].cod_foto} alt=""/>
                         </Col>
                         <Col sm={6} md={6} lg={6}>
                             <Card.Body>
@@ -150,14 +182,59 @@ class ProfiloDocente extends React.Component {
                 <Row id="profilo">
                     <Col id="sezioni" sm={2} md={2} lg={2}>
                         <ListGroup variant="flush">
-                            <a href="#"><ListGroup.Item onClick={this.profile} ref="profile" value="0" active={active0}><h5>PROFILO</h5></ListGroup.Item></a>
-                            <a href="#"><ListGroup.Item onClick={this.ins} ref="ins" value="1" active={active1}><h5>INSEGNAMENTI</h5></ListGroup.Item></a>
-                            <a href="#"><ListGroup.Item onClick={this.ric} ref="ric" value="2" active={active2}><h5>RICEVIMENTO</h5></ListGroup.Item></a>
-                            <a href="#"><ListGroup.Item onClick={this.avv} ref="avv" value="3" active={active3}><h5>AVVISI</h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.profile} ref="profile" value="0" active={active0}><h5>PROFILO</h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ins} ref="ins" value="1" active={active1}><h5>INSEGNAMENTI</h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ric} ref="ric" value="2" active={active2}><h5>RICEVIMENTO</h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.avv} ref="avv" value="3" active={active3}><h5>AVVISI</h5></ListGroup.Item></a>
                         </ListGroup>
                     </Col>
                     <Col id="contenuto" sm={10} md={10} lg={10}>
-                    
+                        <div className="profileContent" style={profileStyle}>
+                            CONTENUTO PROFILO
+                        </div>
+                        <div className="insContent" style={insStyle}>
+                            <div className="header">
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title>
+                                            <h1>Insegnamenti</h1>
+                                            <br/>
+                                        </Card.Title>
+                                        <Card.Title>
+                                            <table>
+                                                <tr>
+                                                    <td id="years">A.A. 2018-2019</td>
+                                                    <td>A.A. 2017-2018</td>
+                                                </tr>
+                                            </table>
+                                        </Card.Title>
+                                        <Card.Text>
+                                            <br/>
+                                            <h4>DES_CORSO_ITA</h4><br/>
+                                            Sede: DES_SEDE<br/>
+                                            Facoltà: DES_FACOLTA_ITA<br/>
+                                            Corsi di laurea: ?<br/><br/>
+                                            <div className="options">
+                                                <ListGroup className="cardProfilo">
+                                                    <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
+                                                    <ListGroup.Item id="dettaglio" action href=""><center>DETTAGLIO ></center></ListGroup.Item>
+                                                </ListGroup>
+                                                <ListGroup className="cardProfilo">
+                                                    <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
+                                                    <ListGroup.Item id="dettaglio" action href=""><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item>
+                                                </ListGroup>
+                                            </div>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                        </div>
+                        <div className="ricContent" style={ricStyle}>
+                            CONTENUTO RICEVIMENTO
+                        </div>
+                        <div className="avvContent" style={avvStyle}>
+                            CONTENUTO AVVISI
+                        </div>
                     </Col>
                 </Row>
             </div>  

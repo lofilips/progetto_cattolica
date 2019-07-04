@@ -230,7 +230,7 @@ class ListaDocenti extends React.Component {
 
         } else { 
             return (
-                <div className="pagRicerca" style={{paddingTop: "200px"}}><h1><center>Loading...{this.state.immagine.length*20}%</center></h1></div>
+                <div className="pagRicerca" style={{paddingTop: "200px"}}><h1><center>Loading... {this.state.immagine.length*20}%</center></h1></div>
             ) 
         } 
     }

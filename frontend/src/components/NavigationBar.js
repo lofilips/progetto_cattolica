@@ -6,7 +6,7 @@ import logo from '../assets/logo-unicatt.jpg'
 function NavigationBar() {
     return (
         <>
-            <Container fluid>
+            <Container fluid className="main">
                 <Navbar >
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -15,7 +15,7 @@ function NavigationBar() {
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
-                <Row>
+                <Row className="heady">
                     <Col sm="4">
                         <a href="/docenti"><Image src={logo} alt="" /></a>
                     </Col>

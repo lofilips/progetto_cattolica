@@ -1,0 +1,12 @@
+a.footer-links {
+    padding-bottom: 6px;
+}
+
+#secondLogo {
+    position: relative;
+    bottom: 9px;
+}
+
+a.footer-links:hover {
+    color: black;
+}
