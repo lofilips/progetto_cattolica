@@ -25,6 +25,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
     searchProfBySurname(surname) { 
         return new Promise((resolve, reject) => {
             knex.select('*').from('lista_docenti').where(knex.raw("CONCAT(cog_docente, ' ', nom_docente)"), 'like', '%' + surname + '%').orWhere(knex.raw("CONCAT(nom_docente, ' ', cog_docente)"), 'like', '%' + surname + '%')
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
@@ -39,6 +40,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
     searchProfByStructure(structure) { 
         return new Promise((resolve, reject) => {
             knex.select('*').from('lista_docenti').where('des_struttura_aff', 'like', '%' + structure + '%')
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
@@ -53,6 +55,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
     searchProfByCourse(course) { 
         return new Promise((resolve, reject) => {
             knex.select('*').from('lista_docenti').where('des_facolta', 'like', '%' + course + '%')
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
@@ -67,6 +70,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
     searchProfByCode(code) { 
         return new Promise((resolve, reject) => {
             knex.select('*').from('lista_docenti').where('cod_docente', 'like', '%' + code + '%')
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
@@ -81,6 +85,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
     searchProfByTeaching(teach) { 
         return new Promise((resolve, reject) => {
             knex.select('*').from('conferimenti').where('DES_INSEGNAMENTO_ITA', 'like', '%' + teach + '%')
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))

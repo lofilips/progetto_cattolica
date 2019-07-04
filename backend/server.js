@@ -82,7 +82,7 @@ app.get('/docenti/foto_docente/:code', (req, res) => {
         res.send(results.data)
     })           
     .catch(error => {
-        console.log("ERRORE: " + error);
+        console.log("ERROR: " + error);
     })
 
 })

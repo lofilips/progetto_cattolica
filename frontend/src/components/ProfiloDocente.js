@@ -42,6 +42,10 @@ class ProfiloDocente extends React.Component {
         // console.log("stringaRicerca: " + stringaRicerca)
         await fetch(process.env.REACT_APP_URL_SERVER + "profilo_docente/" + stringaRicerca)
             .then(res => {
+                if (res.status !== 200) {
+                    console.log('ERROR. Status Code: ' + res.status)
+                    return
+                }
                 console.log(res)
                 return res.json();
             })

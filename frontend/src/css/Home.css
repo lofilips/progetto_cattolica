@@ -26,7 +26,7 @@ html, body {
 }
 
 .main-content {
-    background-image: url("../assets/backgroundImg.jpg");
+    background-image: url("../assets/bg.jpg");
     height: 1000px;
     background-size: 100% 100%;
     z-index: -2;
