@@ -32,7 +32,8 @@ class ProfiloDocente extends React.Component {
         super(props)
         this.state = {
             docenti: {},
-            immagine: false
+            immagine: false,
+            insegnamenti: []
         }
     }
 
@@ -51,7 +52,6 @@ class ProfiloDocente extends React.Component {
                 this.setState(() => ({ docenti: result }))
             })
             
-
         await axios.get(process.env.REACT_APP_URL_SERVER + 'foto_docente/' + stringaRicerca)
         .then(res => {
             console.log(res)
@@ -65,6 +65,18 @@ class ProfiloDocente extends React.Component {
         })
         .catch(error => {
             console.log("ERRORE: " + error);
+        })
+
+        await fetch(process.env.REACT_APP_URL_SERVER + "insegnamenti2/" + stringaRicerca)
+        .then(res => {
+            if (res.status !== 200) {
+                console.log('ERROR. Status Code: ' + res.status)
+                return
+            }
+            return res.json();
+        })
+        .then(result => {
+            this.setState(() => ({ insegnamenti: result }))
         })
 
         this.forceUpdate()
@@ -200,6 +212,33 @@ class ProfiloDocente extends React.Component {
             )
         }
 
+        let insegnamento = []
+
+        for ( let i = 0 ; i < this.state.insegnamenti.length; i++) {
+                insegnamento[i] = (
+                        <Card.Text key={i}>
+                            <br/>
+                            <h5>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</h5><br/>
+                            Sede: {this.state.insegnamenti[i].DES_SEDE}<br/>
+                            Facoltà: {this.state.insegnamenti[i].DES_FACOLTA_ITA}<br/>
+                            Corsi di laurea: {this.state.insegnamenti[i].DES_CORSO_ITA}<br/><br/>
+                            <Container className="options">
+                                <ListGroup className="cardProfilo">
+                                    <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
+                                    <a href=""><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></a>
+                                </ListGroup>
+                                <ListGroup className="cardProfilo">
+                                    <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
+                                    <a href=""><ListGroup.Item as="listGroup" action><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item></a>
+                                </ListGroup>
+                            </Container>
+                            <br/><br/>
+                            <hr/>
+                        </Card.Text>
+                )
+                
+        }
+
         if (this.state.immagine) {
             return (
             <div className="pagRicerca">
@@ -231,41 +270,24 @@ class ProfiloDocente extends React.Component {
                             </Card>
                         </div>
                         <div className="insContent" style={insStyle}>
-                            <div className="header">
-                                <Card>
-                                    <Card.Body>
-                                        <Card.Title>
-                                            <h3><b>Insegnamenti</b></h3>
-                                            <br/>
-                                            <hr/>
-                                        </Card.Title>
-                                        <Card.Title>
-                                            <Row>
-                                                <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years1Style} onClick={this.years1}>A.A. 2018-2019</a></Col>
-                                                <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years2Style} onClick={this.years2}>A.A. 2017-2018</a></Col>
-                                            </Row>
-                                            <hr/>
-                                        </Card.Title>
-                                        <Card.Text>
-                                            <br/>
-                                            <h5>DES_CORSO_ITA</h5><br/>
-                                            Sede: DES_SEDE<br/>
-                                            Facoltà: DES_FACOLTA_ITA<br/>
-                                            Corsi di laurea: ?<br/><br/>
-                                            <Container className="options">
-                                                <ListGroup className="cardProfilo">
-                                                    <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
-                                                    <a href=""><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></a>
-                                                </ListGroup>
-                                                <ListGroup className="cardProfilo">
-                                                    <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
-                                                    <a href=""><ListGroup.Item as="listGroup" action><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item></a>
-                                                </ListGroup>
-                                            </Container>
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </div>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h3><b>Insegnamenti</b></h3>
+                                        <br/>
+                                        <hr/>
+                                    </Card.Title>
+                                    <Card.Title>
+                                        <Row>
+                                            <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years1Style} onClick={this.years1}>A.A. 2018-2019</a></Col>
+                                            <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years2Style} onClick={this.years2}>A.A. 2017-2018</a></Col>
+                                        </Row>
+                                        <hr/>
+                                    </Card.Title>
+                                        <div className="cardText">{insegnamento}</div>
+                                </Card.Body>
+                            </Card>
+                            <br/><br/>
                         </div>
                         <div className="ricContent" style={ricStyle}>
                             <Card>

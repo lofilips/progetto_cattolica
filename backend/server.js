@@ -64,7 +64,7 @@ app.get('/docenti/profilo_docente/:code', (req, res) => {
     })
 })
 
-app.get('/docenti/insegnamenti/:teach', (req, res) => {
+app.get('/docenti/insegnamenti1/:teach', (req, res) => {
     docentiDB.searchProfByTeaching(req.params.teach)
     .then(results => {
         console.log(results.data)
@@ -85,6 +85,17 @@ app.get('/docenti/foto_docente/:code', (req, res) => {
         console.log("ERROR: " + error);
     })
 
+})
+
+app.get('/docenti/insegnamenti2/:code', (req, res) => {
+    docentiDB.searchInsByCode(req.params.code)
+    .then(results => {
+        console.log(results.data)
+        res.send(results)
+    })
+    .catch(err => {
+        console.log('Promise rejection error: ' + err)
+    })
 })
 
 app.listen(4000)

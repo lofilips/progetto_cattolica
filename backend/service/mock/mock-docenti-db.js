@@ -53,4 +53,8 @@ module.exports = class MockDocentiDB extends DocentiDB {
         )
     }
 
+    searchProfByTeaching(teach) {}
+
+    searchInsByCode(code) {}
+
 }

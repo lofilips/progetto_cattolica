@@ -81,7 +81,7 @@ class ListaDocenti extends React.Component {
         }
 
         if (filtro === 'insegnamenti') { 
-            await axios.get(process.env.REACT_APP_URL_SERVER + 'insegnamenti/' + stringaRicerca)
+            await axios.get(process.env.REACT_APP_URL_SERVER + 'insegnamenti1/' + stringaRicerca)
             .then(res => {
                 console.log(res.data)
                 this.setState({ docenti: res.data })

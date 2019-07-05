@@ -69,7 +69,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
 
     searchProfByCode(code) { 
         return new Promise((resolve, reject) => {
-            knex.select('*').from('lista_docenti').where('cod_docente', 'like', '%' + code + '%')
+            knex.select('*').from('lista_docenti').where('cod_docente', code)
             .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
@@ -84,7 +84,7 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
 
     searchProfByTeaching(teach) { 
         return new Promise((resolve, reject) => {
-            knex.select('*').from('conferimenti').where('DES_INSEGNAMENTO_ITA', 'like', '%' + teach + '%')
+            knex.select('*').from('conferimenti_docenti').where('DES_INSEGNAMENTO_ITA', 'like', '%' + teach + '%')
             .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
@@ -97,6 +97,19 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
         })
     }
 
-    searchTeachingByCode() {}
+    searchInsByCode(code) { 
+        return new Promise((resolve, reject) => {
+            knex.select('*').from('conferimenti_docenti').where('cod_docente', code)
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
+            .then(rows => {
+                if (rows === undefined) {
+                    reject(new Error("Rows is undefined"))
+                } else {
+                    resolve(rows)
+                }
+            })
+            .catch(error => console.log('ERRORE: ' + error))
+        })
+    }
 
 }

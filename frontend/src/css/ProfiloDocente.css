@@ -58,3 +58,10 @@ opzioniProfilo {
     position: relative;
     bottom: 28px ;
 }
+
+.cardText {
+    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: none;
+    height: 500px;
+}
