@@ -19,3 +19,8 @@ a.footer-links:hover {
 .colonna {
     margin-top: 8px !important;
 }
+
+.footer-links-social img:hover {
+    transition: transform .50s ease;
+    transform: scale(2);
+}

@@ -35,6 +35,7 @@ function Footer() {
             </Col>
             <Col className="social" sm="2" lg="2">
                 <p>Segui Università Cattolica su:</p>
+                <br/>
                 <a className="footer-links-social" href="https://www.facebook.com/unicatt"><img src={require('../assets/facebook.png')} alt=""/></a>
                 <a className="footer-links-social" href="https://twitter.com/unicatt"><img src={require('../assets/twitter.png')} alt=""/></a>
                 <a className="footer-links-social" href="https://www.instagram.com/unicatt/"><img src={require('../assets/instagram.png')} alt=""/></a>

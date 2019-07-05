@@ -59,9 +59,24 @@ opzioniProfilo {
     bottom: 28px ;
 }
 
-.cardText {
+#cardText::-webkit-scrollbar-track {
+    border: 1px solid rgb(219, 212, 212);
+    border-radius: 10px;
+    background-color: white;
+}
+
+#cardText::-webkit-scrollbar {
+	width: 18px;
+	background-color: white;
+}
+
+#cardText::-webkit-scrollbar-thumb {
+    background-color: cornflowerblue;
+    border-radius: 10px;
+}
+
+#cardText {
     overflow: scroll;
     overflow-x: auto;
-    overflow-y: none;
-    height: 500px;
+    height: 600px;
 }

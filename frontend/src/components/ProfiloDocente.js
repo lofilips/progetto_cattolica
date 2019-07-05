@@ -327,7 +327,7 @@ class ProfiloDocente extends React.Component {
                                         </Row>
                                         <hr/>
                                     </Card.Title>
-                                        <div className="cardText">{annoAcc === true ? insegnamento2018 : insegnamento2017}</div>
+                                        <div id="cardText">{annoAcc === true ? insegnamento2018 : insegnamento2017}</div>
                                 </Card.Body>
                             </Card>
                             <br/><br/>
