@@ -40,6 +40,10 @@ listGroup:hover {
     background-color: #007bff !important;
 }
 
+items {
+    border-radius: 90px !important;
+}
+
 years {
     text-align: left !important;
     padding-bottom: 30px !important;
@@ -48,4 +52,9 @@ years {
 years > a {
     color: black;
     font-weight: 600;
+}
+
+opzioniProfilo {
+    position: relative;
+    bottom: 28px ;
 }

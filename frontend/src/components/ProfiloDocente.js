@@ -205,12 +205,12 @@ class ProfiloDocente extends React.Component {
             <div className="pagRicerca">
                 {docente}
                 <Row className="profilo">
-                    <Col id="sezioni" sm={2} md={2} lg={2}>
-                        <ListGroup variant="flush">
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.profile} active={active0}><h5><b>PROFILO</b></h5></ListGroup.Item></a>
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ins} active={active1}><h5><b>INSEGNAMENTI</b></h5></ListGroup.Item></a>
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ric} active={active2}><h5><b>RICEVIMENTO</b></h5></ListGroup.Item></a>
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.avv} active={active3}><h5><b>AVVISI</b></h5></ListGroup.Item></a>
+                    <Col sm={2} md={2} lg={2}>
+                        <ListGroup as="opzioniProfilo" variant="flush">
+                            <a href="#pagRicerca"><ListGroup.Item as="items" onClick={this.profile} active={active0}><h5><b>PROFILO</b></h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item as="items" onClick={this.ins} active={active1}><h5><b>INSEGNAMENTI</b></h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item as="items" onClick={this.ric} active={active2}><h5><b>RICEVIMENTO</b></h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item as="items" onClick={this.avv} active={active3}><h5><b>AVVISI</b></h5></ListGroup.Item></a>
                         </ListGroup>
                     </Col>
                     <Col className="contenuto" sm={10} md={10} lg={10}>
