@@ -16,15 +16,18 @@ let insStyle = { display: 'none' }
 let ricStyle = { display: 'none' }
 let avvStyle = { display: 'none' }
 
-let years1Style = {
+let years2018Style = {
     borderBottom: '2px solid #000',
     paddingBottom: '3px',
 }
 
-let years2Style = {
+let years2017Style = {
     borderBottom: '',
     paddingBottom: '',
 }
+
+let annoAcc = true
+let blackboard
 
 class ProfiloDocente extends React.Component {
 
@@ -102,13 +105,13 @@ class ProfiloDocente extends React.Component {
         insStyle = { display : 'block' }
         ricStyle = { display : 'none' }
         avvStyle = { display : 'none' }
-        years1Style = {
+        years2018Style = {
             borderBottom: '2px solid #000',
             paddingBottom: '3px',
             color: 'black'
         }
         
-        years2Style = {
+        years2017Style = {
             borderBottom: '',
             paddingBottom: '',
             color: 'black'
@@ -137,28 +140,30 @@ class ProfiloDocente extends React.Component {
         avvStyle = { display : 'block' }
     }
 
-    years1() {
-        years1Style = {
+    years2018() {
+        annoAcc = true
+        years2018Style = {
             borderBottom: '2px solid #000',
             paddingBottom: '3px',
             color: 'black'
         }
         
-        years2Style = {
+        years2017Style = {
             borderBottom: '',
             paddingBottom: '',
             color: 'black'
         }
     }
 
-    years2() {
-        years1Style = {
+    years2017() {
+        annoAcc = false
+        years2018Style = {
             borderBottom: '',
             paddingBottom: '',
             color: 'black'
         }
         
-        years2Style = {
+        years2017Style = {
             borderBottom: '2px solid #000',
             paddingBottom: '3px',
             color: 'black'
@@ -212,10 +217,22 @@ class ProfiloDocente extends React.Component {
             )
         }
 
-        let insegnamento = []
+        let insegnamento2017 = []
+        let insegnamento2018 = []
+
 
         for ( let i = 0 ; i < this.state.insegnamenti.length; i++) {
-                insegnamento[i] = (
+
+            if(this.state.insegnamenti[i].LINK_BB === ""){
+                blackboard = "hidden"
+            } else {
+                blackboard = "visible"
+            }
+
+            if (this.state.insegnamenti[i].ANNO_ACCADEMICO === 2018) {
+
+                console.log(this.state.insegnamenti[i].ANNO_ACCADEMICO)
+                insegnamento2018[i] = (
                         <Card.Text key={i}>
                             <br/>
                             <h5>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</h5><br/>
@@ -227,15 +244,41 @@ class ProfiloDocente extends React.Component {
                                     <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
                                     <a href=""><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></a>
                                 </ListGroup>
-                                <ListGroup className="cardProfilo">
+                                <ListGroup className="cardProfilo" style={{visibility : blackboard}}>
                                     <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
-                                    <a href=""><ListGroup.Item as="listGroup" action><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item></a>
+                                    <a href="https://blackboard.unicatt.it"><ListGroup.Item as="listGroup" action><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item></a>
                                 </ListGroup>
                             </Container>
                             <br/><br/>
                             <hr/>
                         </Card.Text>
                 )
+            } else if (this.state.insegnamenti[i].ANNO_ACCADEMICO === 2017){
+
+                console.log("-" + this.state.insegnamenti[i].ANNO_ACCADEMICO)
+                insegnamento2017[i] = (
+                    <Card.Text key={i}>
+                        <br/>
+                        <h5>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</h5><br/>
+                        Sede: {this.state.insegnamenti[i].DES_SEDE}<br/>
+                        Facoltà: {this.state.insegnamenti[i].DES_FACOLTA_ITA}<br/>
+                        Corsi di laurea: {this.state.insegnamenti[i].DES_CORSO_ITA}<br/><br/>
+                        <Container className="options">
+                            <ListGroup className="cardProfilo">
+                                <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
+                                <a href=""><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></a>
+                            </ListGroup>
+                            <ListGroup className="cardProfilo" style={{visibility : blackboard}}>
+                                <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
+                                <a href="https://blackboard.unicatt.it"><ListGroup.Item as="listGroup" action><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item></a>
+                            </ListGroup>
+                        </Container>
+                        <br/><br/>
+                        <hr/>
+                    </Card.Text>
+            )
+
+            }
                 
         }
 
@@ -279,12 +322,12 @@ class ProfiloDocente extends React.Component {
                                     </Card.Title>
                                     <Card.Title>
                                         <Row>
-                                            <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years1Style} onClick={this.years1}>A.A. 2018-2019</a></Col>
-                                            <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years2Style} onClick={this.years2}>A.A. 2017-2018</a></Col>
+                                            <Col as="years" sm={2} md={2} lg={2}><a href="#pagRicerca" style={years2018Style} onClick={this.years2018}>A.A. 2018-2019</a></Col>
+                                            <Col as="years" sm={2} md={2} lg={2}><a href="#pagRicerca" style={years2017Style} onClick={this.years2017}>A.A. 2017-2018</a></Col>
                                         </Row>
                                         <hr/>
                                     </Card.Title>
-                                        <div className="cardText">{insegnamento}</div>
+                                        <div className="cardText">{annoAcc === true ? insegnamento2018 : insegnamento2017}</div>
                                 </Card.Body>
                             </Card>
                             <br/><br/>
