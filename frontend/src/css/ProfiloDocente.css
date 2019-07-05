@@ -80,3 +80,14 @@ opzioniProfilo {
     overflow-x: auto;
     height: 600px;
 }
+
+.insButton {
+    padding: 0;
+    border: none;
+}
+
+.dettaglio {
+    position: fixed;
+    width: 700px;
+    height: 800px;
+}

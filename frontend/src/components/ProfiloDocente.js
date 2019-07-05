@@ -29,6 +29,8 @@ let years2017Style = {
 let annoAcc = true
 let blackboard
 
+let visDettaglio = 'hidden'
+
 class ProfiloDocente extends React.Component {
 
     constructor(props) {
@@ -36,8 +38,10 @@ class ProfiloDocente extends React.Component {
         this.state = {
             docenti: {},
             immagine: false,
-            insegnamenti: []
+            insegnamenti: [],
+            dettaglio: false
         }
+        this.dettaglioDoc = this.dettaglioDoc.bind(this)
     }
 
     async componentWillMount() {
@@ -82,6 +86,18 @@ class ProfiloDocente extends React.Component {
             this.setState(() => ({ insegnamenti: result }))
         })
 
+        this.forceUpdate()
+    }
+
+    dettaglioDoc() {
+        this.setState({dettaglio: !this.state.dettaglio})
+
+        if (this.state.dettaglio) {
+            visDettaglio = 'visible'
+        } else {
+            visDettaglio = 'hidden'
+        }
+        console.log("ciaone")
         this.forceUpdate()
     }
 
@@ -242,7 +258,7 @@ class ProfiloDocente extends React.Component {
                             <Container className="options">
                                 <ListGroup className="cardProfilo">
                                     <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
-                                    <a href=""><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></a>
+                                    <button onClick={this.dettaglioDoc} className="insButton"><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></button>
                                 </ListGroup>
                                 <ListGroup className="cardProfilo" style={{visibility : blackboard}}>
                                     <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
@@ -266,7 +282,7 @@ class ProfiloDocente extends React.Component {
                         <Container className="options">
                             <ListGroup className="cardProfilo">
                                 <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
-                                <a href=""><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></a>
+                                <button onClick={this.dettaglioDoc} className="insButton"><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></button>
                             </ListGroup>
                             <ListGroup className="cardProfilo" style={{visibility : blackboard}}>
                                 <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
@@ -366,6 +382,9 @@ class ProfiloDocente extends React.Component {
                         </div>
                     </Col>
                 </Row>
+                <div className="dettaglio" style={{visibility: visDettaglio}}>
+                    lalalalalalalalalalallala
+                </div>
             </div>  
             )
         } else {
