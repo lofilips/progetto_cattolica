@@ -10,3 +10,12 @@ a.footer-links {
 a.footer-links:hover {
     color: black;
 }
+
+.copyright {
+    min-height: 40px;
+    font-size: 12px;
+}
+
+.colonna {
+    margin-top: 8px !important;
+}

@@ -10,17 +10,13 @@
     padding: 10px;
 }
 
-#profilo {
+.profilo {
     min-height: 70vh;
     padding-top: 5vh;
 }
 
 a {
     text-decoration: none !important;
-}
-
-#years {
-    padding-right: 110px;
 }
 
 .cardProfilo {
@@ -33,4 +29,23 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+listGroup {
+    background-color: cornflowerblue !important;
+    color: white !important;
+}
+
+listGroup:hover {
+    background-color: #007bff !important;
+}
+
+years {
+    text-align: left !important;
+    padding-bottom: 30px !important;
+}
+
+years > a {
+    color: black;
+    font-weight: 600;
 }

@@ -15,6 +15,7 @@
 
 .nav-link:hover {
     color: rgb(209, 98, 98) !important;
+    font-weight: bold;
 }
 
 .heady {

@@ -1,31 +1,29 @@
 import React from 'react'
-import {Card, Row, Col, ListGroup} from 'react-bootstrap'
+import {Card, Row, Col, ListGroup, Container} from 'react-bootstrap'
 import '../css/ProfiloDocente.css'
 import axios from 'axios'
 
 const url = document.location.href
 const stringaRicerca = url.split("/")[5]
 
-let active = 0
 let active0 = true
 let active1 = false
 let active2 = false
 let active3 = false
 
-let profileStyle = {
-    display: 'block'
+let profileStyle = { display: 'block' }
+let insStyle = { display: 'none' }
+let ricStyle = { display: 'none' }
+let avvStyle = { display: 'none' }
+
+let years1Style = {
+    borderBottom: '2px solid #000',
+    paddingBottom: '3px',
 }
 
-let insStyle = {
-    display: 'none'
-}
-
-let ricStyle = {
-    display: 'none'
-}
-
-let avvStyle = {
-    display: 'none'
+let years2Style = {
+    borderBottom: '',
+    paddingBottom: '',
 }
 
 class ProfiloDocente extends React.Component {
@@ -73,7 +71,10 @@ class ProfiloDocente extends React.Component {
     }
 
     profile() {
-        active = 0
+        active0 = true
+        active1 = false
+        active2 = false
+        active3 = false
         profileStyle = { display : 'block' }
         insStyle = { display : 'none' }
         ricStyle = { display : 'none' }
@@ -81,15 +82,32 @@ class ProfiloDocente extends React.Component {
     }
 
     ins() {
-        active = 1
+        active0 = false
+        active1 = true
+        active2 = false
+        active3 = false
         profileStyle = { display : 'none' }
         insStyle = { display : 'block' }
         ricStyle = { display : 'none' }
         avvStyle = { display : 'none' }
+        years1Style = {
+            borderBottom: '2px solid #000',
+            paddingBottom: '3px',
+            color: 'black'
+        }
+        
+        years2Style = {
+            borderBottom: '',
+            paddingBottom: '',
+            color: 'black'
+        }
     }
 
     ric() {
-        active = 2
+        active0 = false
+        active1 = false
+        active2 = true
+        active3 = false
         profileStyle = { display : 'none' }
         insStyle = { display : 'none' }
         ricStyle = { display : 'block' }
@@ -97,20 +115,52 @@ class ProfiloDocente extends React.Component {
     }
 
     avv() {
-        active = 3
+        active0 = false
+        active1 = false
+        active2 = false
+        active3 = true
         profileStyle = { display : 'none' }
         insStyle = { display : 'none' }
         ricStyle = { display : 'none' }
         avvStyle = { display : 'block' }
     }
 
+    years1() {
+        years1Style = {
+            borderBottom: '2px solid #000',
+            paddingBottom: '3px',
+            color: 'black'
+        }
+        
+        years2Style = {
+            borderBottom: '',
+            paddingBottom: '',
+            color: 'black'
+        }
+    }
+
+    years2() {
+        years1Style = {
+            borderBottom: '',
+            paddingBottom: '',
+            color: 'black'
+        }
+        
+        years2Style = {
+            borderBottom: '2px solid #000',
+            paddingBottom: '3px',
+            color: 'black'
+        }
+    }
+
     render() {
 
         let docente = []
-        
+
         for ( let i = 0 ; i < this.state.docenti.length; i++) {
 
-            let email = `mailto:${this.state.docenti[i]}`
+            let email = `mailto:${this.state.docenti[i].email}`
+
             docente[i] = (
                 <Card key={i}>
                     <Row>
@@ -149,95 +199,105 @@ class ProfiloDocente extends React.Component {
                 </Card>
             )
         }
-        
-        switch (active) {
-            case 0:
-                active0 = true
-                active1 = false
-                active2 = false
-                active3 = false
-                break;
-            case 1:
-                active0 = false
-                active1 = true
-                active2 = false
-                active3 = false
-                break;
-            case 2:
-                active0 = false
-                active1 = false
-                active2 = true
-                active3 = false
-                break;
-            case 3:
-                active0 = false
-                active1 = false
-                active2 = false
-                active3 = true
-                break;
-            default:
-                break;
-        }
 
         if (this.state.immagine) {
             return (
             <div className="pagRicerca">
                 {docente}
-                <Row id="profilo">
+                <Row className="profilo">
                     <Col id="sezioni" sm={2} md={2} lg={2}>
                         <ListGroup variant="flush">
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.profile} ref="profile" value="0" active={active0}><h5>PROFILO</h5></ListGroup.Item></a>
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ins} ref="ins" value="1" active={active1}><h5>INSEGNAMENTI</h5></ListGroup.Item></a>
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ric} ref="ric" value="2" active={active2}><h5>RICEVIMENTO</h5></ListGroup.Item></a>
-                            <a href="#pagRicerca"><ListGroup.Item onClick={this.avv} ref="avv" value="3" active={active3}><h5>AVVISI</h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.profile} active={active0}><h5><b>PROFILO</b></h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ins} active={active1}><h5><b>INSEGNAMENTI</b></h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.ric} active={active2}><h5><b>RICEVIMENTO</b></h5></ListGroup.Item></a>
+                            <a href="#pagRicerca"><ListGroup.Item onClick={this.avv} active={active3}><h5><b>AVVISI</b></h5></ListGroup.Item></a>
                         </ListGroup>
                     </Col>
-                    <Col id="contenuto" sm={10} md={10} lg={10}>
+                    <Col className="contenuto" sm={10} md={10} lg={10}>
                         <div className="profileContent" style={profileStyle}>
-                            CONTENUTO PROFILO
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h3><b>Profilo</b></h3>
+                                        <br/>
+                                        <hr/>
+                                    </Card.Title>
+                                    <Card.Text>
+                                        <br/>
+                                        Contenuto profilo...
+                                        <br/><br/>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
                         </div>
                         <div className="insContent" style={insStyle}>
                             <div className="header">
                                 <Card>
                                     <Card.Body>
                                         <Card.Title>
-                                            <h1>Insegnamenti</h1>
+                                            <h3><b>Insegnamenti</b></h3>
                                             <br/>
+                                            <hr/>
                                         </Card.Title>
                                         <Card.Title>
-                                            <table>
-                                                <tr>
-                                                    <td id="years">A.A. 2018-2019</td>
-                                                    <td>A.A. 2017-2018</td>
-                                                </tr>
-                                            </table>
+                                            <Row>
+                                                <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years1Style} onClick={this.years1}>A.A. 2018-2019</a></Col>
+                                                <Col as="years" sm={2} md={2} lg={2}><a href="#" style={years2Style} onClick={this.years2}>A.A. 2017-2018</a></Col>
+                                            </Row>
+                                            <hr/>
                                         </Card.Title>
                                         <Card.Text>
                                             <br/>
-                                            <h4>DES_CORSO_ITA</h4><br/>
+                                            <h5>DES_CORSO_ITA</h5><br/>
                                             Sede: DES_SEDE<br/>
                                             Facoltà: DES_FACOLTA_ITA<br/>
                                             Corsi di laurea: ?<br/><br/>
-                                            <div className="options">
+                                            <Container className="options">
                                                 <ListGroup className="cardProfilo">
                                                     <ListGroup.Item>Consulta il programma, orari del corso, date di esame</ListGroup.Item>
-                                                    <ListGroup.Item id="dettaglio" action href=""><center>DETTAGLIO ></center></ListGroup.Item>
+                                                    <a href=""><ListGroup.Item as="listGroup" action><center>DETTAGLIO ></center></ListGroup.Item></a>
                                                 </ListGroup>
                                                 <ListGroup className="cardProfilo">
                                                     <ListGroup.Item>Scopri l’area dedicata per gli studenti del corso</ListGroup.Item>
-                                                    <ListGroup.Item id="dettaglio" action href=""><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item>
+                                                    <a href=""><ListGroup.Item as="listGroup" action><center>ACCEDI A BLACKBOARD ></center></ListGroup.Item></a>
                                                 </ListGroup>
-                                            </div>
+                                            </Container>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
                             </div>
                         </div>
                         <div className="ricContent" style={ricStyle}>
-                            CONTENUTO RICEVIMENTO
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h3><b>Ricevimento</b></h3>
+                                        <br/>
+                                        <hr/>
+                                    </Card.Title>
+                                    <Card.Text>
+                                        <br/>
+                                        Contenuto ricevimento...
+                                        <br/><br/>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
                         </div>
                         <div className="avvContent" style={avvStyle}>
-                            CONTENUTO AVVISI
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h3><b>Avvisi</b></h3>
+                                        <br/>
+                                        <hr/>
+                                    </Card.Title>
+                                    <Card.Text>
+                                        <br/>
+                                        Contenuto avvisi...
+                                        <br/><br/>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
                         </div>
                     </Col>
                 </Row>
@@ -245,7 +305,7 @@ class ProfiloDocente extends React.Component {
             )
         } else {
             return (
-                <div className="pagRicerca"><h1><center>Loading...</center></h1></div>
+                <div className="pagRicercaLoad" style={{paddingTop: "200px", minHeight: "1000px"}}><h1><center>Loading...</center></h1></div>
             ) 
         }
     }

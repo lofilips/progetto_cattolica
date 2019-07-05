@@ -124,6 +124,7 @@ html, body {
       color: white;
       display: inline;
       font-weight: bold;
+      padding-top: 32px !important;
   }
 
   .social img {
@@ -131,16 +132,16 @@ html, body {
       padding-bottom: 25px;
   }
 
-  .footer-links-social{
+  .footer-links-social {
       display: inline;
       padding: 10px;
   }
 
-  .col-sm-2{
+  .col-sm-2 {
     text-align: center;
   }
 
-.listaRisultati{
+.listaRisultati {
     background-color: #f1f1f1;
     list-style: none;
     border: solid grey 1px;
