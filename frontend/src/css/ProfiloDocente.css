@@ -87,7 +87,33 @@ opzioniProfilo {
 }
 
 .dettaglio {
-    position: fixed;
-    width: 700px;
-    height: 800px;
+    width:50%;
+    height: 500px;
+    background-color: grey; 
+    position: absolute; 
+    top: 200px; 
+    left: 25%;
+}
+
+#buttonDettaglio{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+#imgDettaglio{
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+#buttonDettaglio:focus{
+    outline: none;
 }

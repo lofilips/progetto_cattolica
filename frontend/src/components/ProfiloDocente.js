@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Row, Col, ListGroup, Container} from 'react-bootstrap'
+import {Card, Row, Col, ListGroup, Container, Form, Button } from 'react-bootstrap'
 import '../css/ProfiloDocente.css'
 import axios from 'axios'
 
@@ -39,7 +39,8 @@ class ProfiloDocente extends React.Component {
             docenti: {},
             immagine: false,
             insegnamenti: [],
-            dettaglio: false
+            dettaglio: false,
+            profilo: ""
         }
         this.dettaglioDoc = this.dettaglioDoc.bind(this)
     }
@@ -86,18 +87,29 @@ class ProfiloDocente extends React.Component {
             this.setState(() => ({ insegnamenti: result }))
         })
 
+        await fetch('/docenti/contenuto_profilo/' + stringaRicerca)
+        .then(res => {
+            if (res.status !== 200) {
+                console.log('ERROR. Status Code: ' + res.status)
+                return
+            }
+            return res.json();
+        })
+        .then(result => {
+            //console.log(result[0].contenuto_profilo)
+            this.setState(() => ({ profilo: result[0].contenuto_profilo }))
+        })
+
+
         this.forceUpdate()
     }
 
     dettaglioDoc() {
         this.setState({dettaglio: !this.state.dettaglio})
+        console.log(this.state.dettaglio)
+        visDettaglio = 'visible'
+        console.log(visDettaglio)
 
-        if (this.state.dettaglio) {
-            visDettaglio = 'visible'
-        } else {
-            visDettaglio = 'hidden'
-        }
-        console.log("ciaone")
         this.forceUpdate()
     }
 
@@ -299,6 +311,7 @@ class ProfiloDocente extends React.Component {
         }
 
         if (this.state.immagine) {
+
             return (
             <div className="pagRicerca">
                 {docente}
@@ -320,9 +333,9 @@ class ProfiloDocente extends React.Component {
                                         <br/>
                                         <hr/>
                                     </Card.Title>
-                                    <Card.Text>
+                                    <Card.Text style={{minHeight: "420px"}}>
                                         <br/>
-                                        Contenuto profilo...
+                                        {this.state.profilo}
                                         <br/><br/>
                                     </Card.Text>
                                 </Card.Body>
@@ -383,7 +396,8 @@ class ProfiloDocente extends React.Component {
                     </Col>
                 </Row>
                 <div className="dettaglio" style={{visibility: visDettaglio}}>
-                    lalalalalalalalalalallala
+                    <button id="buttonDettaglio" onClick={() => {visDettaglio = "hidden"; this.forceUpdate()}}><img id="imgDettaglio" src={require('../assets/x-mark.png')} alt="" /></button>
+                    Qua va implementato il dettaglio insegnamenti
                 </div>
             </div>  
             )

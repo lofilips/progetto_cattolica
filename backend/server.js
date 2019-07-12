@@ -34,6 +34,7 @@ app.post('/docenti/login_area_riservata', (req, res) => {
             res.send(token)
         } else {
             console.log('Errore: utente non trovato')
+            res.sendStatus(401)
         }
     })
     .catch(err => console.log(err))

@@ -28,6 +28,7 @@ let annoAcc = true
 let blackboard
 
 let visDettaglio = 'hidden'
+let visiModifica = 'none'
 
 function getCookieValue(cookieName){
 
@@ -225,8 +226,17 @@ class AreaRiservata extends React.Component {
         console.log("contenuto profilo " + this.state.contenutoProfilo)
 
         axios.put(`/docenti/modifica_profilo/${stringaRicerca}/${this.state.contenutoProfilo}`)
-        .then(res => console.log(res.status))
+        .then(res => {
+            console.log(res.status)
+        })
         .catch(error => console.log(error))
+
+        visiModifica = "block"
+        this.forceUpdate()
+        setTimeout(() => {
+            visiModifica = "none"
+            this.forceUpdate()
+        }, 5000);
     }
 
     render() {
@@ -348,7 +358,10 @@ class AreaRiservata extends React.Component {
                 <Form.Group key={i}>
                     <Form.Control as="textarea" rows="20" onChange={this.handleProfileChange}>{this.state.profilo[i].contenuto_profilo}</Form.Control>
                     <br/>
-                    <Button variant="primary" onClick={this.modificaProfilo}>Conferma modifica</Button>
+                    <Button variant="primary" onClick={this.modificaProfilo}>Conferma modifica</Button>  
+                    <br />
+                    <br />
+                    <div style={{color: "green", display: visiModifica}}>Modifica effettuata con successo</div>
                 </Form.Group>
             )
         }
@@ -378,7 +391,6 @@ class AreaRiservata extends React.Component {
                                     <Card.Text>
                                         <br/>
                                         {contenutoProfilo}
-                                        <br/>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

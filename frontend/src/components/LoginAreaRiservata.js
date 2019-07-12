@@ -15,6 +15,8 @@ function getCookieValue(cookieName){
       }
 }
 
+let errorDisplay = "none"
+
 class LoginAreaRiservata extends Component {
 
     constructor() {
@@ -50,11 +52,24 @@ class LoginAreaRiservata extends Component {
                 throw error
             }
         })
-        .catch(error => console.error(error))
+        .catch(error => {
+            errorDisplay = "block"
+            console.error(error)
+            this.forceUpdate()
+        })
 
     }
 
+    componentDidMount(){
+        if(getCookieValue('token') !== null && getCookieValue('user') !== null){
+            window.location.href = '/docenti/area_riservata'
+        }
+    }
+
+
     render() {
+
+        
 
         if(this.state.isLogged){
 
@@ -84,8 +99,11 @@ class LoginAreaRiservata extends Component {
                             <text>LOGIN DOCENTI UNICATT</text>
                             <div className="form">
                                 <form name="form" onSubmit={this.handleSubmit}>
-                                    <input className="input" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                                    <input type="password" className="input" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                                    <input autoComplete="off" className="input" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange} onClick={() => {errorDisplay = "none"; this.forceUpdate()}}></input>
+                                    <input autoComplete="off" type="password" className="input" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} onClick={() => {errorDisplay = "none"; this.forceUpdate()}}></input>
+                                    <br />
+                                    <br />
+                                    <span style={{color: "white", fontWeight: "bold", fontSize: "20px", display: errorDisplay}}>Errore! Username o password non corretti</span>
                                     <button id="button" type="submit" onClick={this.handleSubmit}>Login</button>
                                 </form>
                             </div>
