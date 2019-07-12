@@ -1,9 +1,8 @@
 import React from 'react'
-import {Card, Row, Col, ListGroup, Container} from 'react-bootstrap'
+import { Card, Row, Col, ListGroup, Container, Form, Button } from 'react-bootstrap'
 import '../css/ProfiloDocente.css'
+import '../css/AreaRiservata.css'
 import axios from 'axios'
-
-const url = document.location.href
 
 let active0 = true
 let active1 = false
@@ -53,12 +52,16 @@ class AreaRiservata extends React.Component {
             docenti: {},
             immagine: false,
             insegnamenti: [],
-            dettaglio: false
+            dettaglio: false,
+            profilo: [],
+            contenutoProfilo: ''
         }
         this.dettaglioDoc = this.dettaglioDoc.bind(this)
+        this.handleProfileChange = this.handleProfileChange.bind(this)
+        this.modificaProfilo = this.modificaProfilo.bind(this)
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         // console.log("stringaRicerca: " + stringaRicerca)
         await fetch('/docenti/profilo_docente/' + stringaRicerca)
             .then(res => {
@@ -94,13 +97,24 @@ class AreaRiservata extends React.Component {
                 console.log('ERROR. Status Code: ' + res.status)
                 return
             }
+            console.log('STRINGA RICERCA: ' + stringaRicerca)
             return res.json();
         })
         .then(result => {
             this.setState(() => ({ insegnamenti: result }))
         })
 
-        console.log(stringaRicerca)
+        await fetch('/docenti/contenuto_profilo/' + stringaRicerca)
+        .then(res => {
+            if (res.status !== 200) {
+                console.log('ERROR. Status Code: ' + res.status)
+                return
+            }
+            return res.json();
+        })
+        .then(result => {
+            this.setState(() => ({ profilo: result }))
+        })
 
         this.forceUpdate()
     }
@@ -202,6 +216,19 @@ class AreaRiservata extends React.Component {
         }
     }
 
+    handleProfileChange(event) {
+        this.setState({ contenutoProfilo: event.target.value })
+        // console.log(this.state.contenutoProfilo)
+    }
+
+    modificaProfilo() {
+        console.log("contenuto profilo " + this.state.contenutoProfilo)
+
+        axios.put(`/docenti/modifica_profilo/${stringaRicerca}/${this.state.contenutoProfilo}`)
+        .then(res => console.log(res.status))
+        .catch(error => console.log(error))
+    }
+
     render() {
 
         let docente = []
@@ -263,7 +290,7 @@ class AreaRiservata extends React.Component {
 
             if (this.state.insegnamenti[i].ANNO_ACCADEMICO === 2018) {
 
-                console.log(this.state.insegnamenti[i].ANNO_ACCADEMICO)
+                // console.log(this.state.insegnamenti[i].ANNO_ACCADEMICO)
                 insegnamento2018[i] = (
                         <Card.Text key={i}>
                             <br/>
@@ -287,7 +314,7 @@ class AreaRiservata extends React.Component {
                 )
             } else if (this.state.insegnamenti[i].ANNO_ACCADEMICO === 2017){
 
-                console.log("-" + this.state.insegnamenti[i].ANNO_ACCADEMICO)
+                // console.log("-" + this.state.insegnamenti[i].ANNO_ACCADEMICO)
                 insegnamento2017[i] = (
                     <Card.Text key={i}>
                         <br/>
@@ -314,6 +341,18 @@ class AreaRiservata extends React.Component {
                 
         }
 
+        let contenutoProfilo = []
+
+        for (let i = 0; i < this.state.profilo.length; i++) {
+            contenutoProfilo[i] = (
+                <Form.Group key={i}>
+                    <Form.Control as="textarea" rows="20" onChange={this.handleProfileChange}>{this.state.profilo[i].contenuto_profilo}</Form.Control>
+                    <br/>
+                    <Button variant="primary" onClick={this.modificaProfilo}>Conferma modifica</Button>
+                </Form.Group>
+            )
+        }
+
         if (this.state.immagine) {
             return (
             <div className="pagRicerca">
@@ -338,8 +377,8 @@ class AreaRiservata extends React.Component {
                                     </Card.Title>
                                     <Card.Text>
                                         <br/>
-                                        Contenuto profilo...
-                                        <br/><br/>
+                                        {contenutoProfilo}
+                                        <br/>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

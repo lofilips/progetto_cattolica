@@ -59,4 +59,8 @@ module.exports = class MockDocentiDB extends DocentiDB {
 
     loginDocente(username, password) {}
 
+    getContenutoProfilo(code) {}
+
+    setContenutoProfilo(code, profile) {}
+
 }
