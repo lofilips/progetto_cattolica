@@ -40,12 +40,6 @@ text{
     text-shadow: 1px 1px rgb(255, 255, 255);
 }
 
-.utility{
-    color: white;
-    float: left;
-    padding-left: 30px;
-}
-
 #ciaoUser {
     padding: 0.5rem 1rem;
     color: white;

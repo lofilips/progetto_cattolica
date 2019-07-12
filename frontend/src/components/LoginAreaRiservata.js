@@ -89,7 +89,6 @@ class LoginAreaRiservata extends Component {
                                     <button id="button" type="submit" onClick={this.handleSubmit}>Login</button>
                                 </form>
                             </div>
-                            <br /><a className="utility" href="">- CAMBIA PASSWORD</a> 
                         </div>
                     </center>
                 </div>
