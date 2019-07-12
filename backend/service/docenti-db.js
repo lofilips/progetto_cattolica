@@ -25,6 +25,10 @@ module.exports = class DocentiDB {
         if (!this.searchInsByCode) {
             throw new Error('Metodo non definito');
         }
+
+        if (!this.loginDocente) {
+            throw new Error('Metodo non definito');
+        }
         
     }
 

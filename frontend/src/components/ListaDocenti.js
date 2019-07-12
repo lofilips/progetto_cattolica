@@ -48,7 +48,7 @@ class ListaDocenti extends React.Component {
         } while (count === true)
 
         if (filtro !== 'struttura' && filtro !== 'facolta' && filtro !== 'insegnamenti') { 
-            await axios.get(process.env.REACT_APP_URL_SERVER + stringaRicerca)
+            await axios.get('/docenti/' + stringaRicerca)
             .then(res => {
                 console.log(res.data)
                 this.setState({ docenti: res.data })
@@ -59,7 +59,7 @@ class ListaDocenti extends React.Component {
         }
 
         if (filtro === 'struttura') { 
-            await axios.get(process.env.REACT_APP_URL_SERVER + "struttura/" + stringaRicerca)
+            await axios.get('/docenti/struttura/' + stringaRicerca)
             .then(res => {
                 console.log(res.data)
                 this.setState({ docenti: res.data })
@@ -70,7 +70,7 @@ class ListaDocenti extends React.Component {
         }
 
         if (filtro === 'facolta') { 
-            await axios.get(process.env.REACT_APP_URL_SERVER + 'facolta/' + stringaRicerca)
+            await axios.get('/docenti/facolta/' + stringaRicerca)
             .then(res => {
                 console.log(res.data)
                 this.setState({ docenti: res.data })
@@ -81,7 +81,7 @@ class ListaDocenti extends React.Component {
         }
 
         if (filtro === 'insegnamenti') { 
-            await axios.get(process.env.REACT_APP_URL_SERVER + 'insegnamenti1/' + stringaRicerca)
+            await axios.get('/docenti/insegnamenti1/' + stringaRicerca)
             .then(res => {
                 console.log(res.data)
                 this.setState({ docenti: res.data })
@@ -92,7 +92,7 @@ class ListaDocenti extends React.Component {
         }
 
         for (let i = 0 ; i < this.state.docenti.length ; i++) { 
-            await axios.get(process.env.REACT_APP_URL_SERVER + 'foto_docente/' + this.state.docenti[i].cod_docente)
+            await axios.get('/docenti/foto_docente/' + this.state.docenti[i].cod_docente)
             .then(res => {
                 //console.log(res)
                 if (res.data.base64Foto === null) { 

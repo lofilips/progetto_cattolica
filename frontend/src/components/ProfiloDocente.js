@@ -46,7 +46,7 @@ class ProfiloDocente extends React.Component {
 
     async componentWillMount() {
         // console.log("stringaRicerca: " + stringaRicerca)
-        await fetch(process.env.REACT_APP_URL_SERVER + "profilo_docente/" + stringaRicerca)
+        await fetch('/docenti/profilo_docente/' + stringaRicerca)
             .then(res => {
                 if (res.status !== 200) {
                     console.log('ERROR. Status Code: ' + res.status)
@@ -59,7 +59,7 @@ class ProfiloDocente extends React.Component {
                 this.setState(() => ({ docenti: result }))
             })
             
-        await axios.get(process.env.REACT_APP_URL_SERVER + 'foto_docente/' + stringaRicerca)
+        await axios.get('/docenti/foto_docente/' + stringaRicerca)
         .then(res => {
             console.log(res)
             if (res.data.base64Foto === null){ 
@@ -74,7 +74,7 @@ class ProfiloDocente extends React.Component {
             console.log("ERRORE: " + error);
         })
 
-        await fetch(process.env.REACT_APP_URL_SERVER + "insegnamenti2/" + stringaRicerca)
+        await fetch('/docenti/insegnamenti2/' + stringaRicerca)
         .then(res => {
             if (res.status !== 200) {
                 console.log('ERROR. Status Code: ' + res.status)

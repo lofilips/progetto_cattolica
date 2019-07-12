@@ -2,23 +2,42 @@ const axios = require('axios')
 const docentiDB = require('./service/docenti-db-factory').DocentiDB();
 const express = require('express')
 const bodyParser = require('body-parser')
-const cors = require('cors')
-
+const jwt = require('jsonwebtoken')
+const withAuth = require('./service/middleware')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
-app.use(cors())
+const secret = 'mysecret';
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-    next()
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+app.post('/docenti/login_area_riservata', (req, res) => {
+    
+    const { username, password } = req.body
+
+    docentiDB.loginDocente(username, password)
+    .then(results => {
+        if (results.length === 1) {
+            // console.log('Utente trovato')
+            const payload = { username }
+            const token = jwt.sign(payload, secret, {
+                expiresIn: '1h'
+            });
+            // console.log('TOKEN '+ token);
+            res.cookie('token', token, { path: '/docenti', httpOnly: true });
+            res.sendStatus(200)
+        } else {
+            console.log('Errore: utente non trovato')
+        }
+    })
+    .catch(err => console.log(err))
 })
 
-app.use(bodyParser.json())
-
-app.get('/', (req, res) => {
-    res.send('Express Server is listening...')
+app.get('/docenti/checkToken', withAuth, (req, res) => {
+    res.sendStatus(200)
 })
 
 app.get('/docenti/:surname', (req, res) => {
@@ -67,7 +86,7 @@ app.get('/docenti/profilo_docente/:code', (req, res) => {
 app.get('/docenti/insegnamenti1/:teach', (req, res) => {
     docentiDB.searchProfByTeaching(req.params.teach)
     .then(results => {
-        console.log(results.data)
+        // console.log(results.data)
         res.send(results)
     })
     .catch(err => {
@@ -90,7 +109,7 @@ app.get('/docenti/foto_docente/:code', (req, res) => {
 app.get('/docenti/insegnamenti2/:code', (req, res) => {
     docentiDB.searchInsByCode(req.params.code)
     .then(results => {
-        console.log(results.data)
+        // console.log(results.data)
         res.send(results)
     })
     .catch(err => {

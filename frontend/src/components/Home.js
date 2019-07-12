@@ -21,7 +21,7 @@ class Home extends Component {
         })
 
         if (this.state.search.trim().length > 2) {
-            await axios.get(process.env.REACT_APP_URL_SERVER + this.state.search.trimLeft())
+            await axios.get('/docenti/' + this.state.search.trimLeft())
             .then(res => {
                 // console.log(res.data)
                 this.setState({ docenti: res.data })

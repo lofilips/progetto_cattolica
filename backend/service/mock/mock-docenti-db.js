@@ -57,4 +57,6 @@ module.exports = class MockDocentiDB extends DocentiDB {
 
     searchInsByCode(code) {}
 
+    loginDocente(username, password) {}
+
 }
