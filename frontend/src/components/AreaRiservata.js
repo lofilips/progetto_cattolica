@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-const cookies = require('js-cookie')
 
 const myStyle = {
     minHeight: 1000,
@@ -14,19 +13,6 @@ class AreaRiservata extends Component {
         }
     }
 
-    logout() {
-        
-        // document.cookie = 'token=deleted; Path=/docenti; Domain=localhost; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-        // document.cookie = 'token=deleted; Path=/docenti; Domain=localhost; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        // localStorage.removeItem('token')
-        // sessionStorage.removeItem('token')
-
-        cookies.remove('token', { path: '/docenti' })
-        
-        console.log('Perchè non funzioni???')
-
-    }
-    
     render() {
         
         return (

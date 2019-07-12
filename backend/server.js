@@ -27,7 +27,7 @@ app.post('/docenti/login_area_riservata', (req, res) => {
                 expiresIn: '1h'
             });
             // console.log('TOKEN '+ token);
-            res.cookie('token', token, { path: '/docenti', httpOnly: true });
+            res.send(token);
             res.sendStatus(200)
         } else {
             console.log('Errore: utente non trovato')

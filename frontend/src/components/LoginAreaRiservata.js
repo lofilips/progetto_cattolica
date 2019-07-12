@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../css/LoginAreaRiservata.css'
+import '../css/Login.css'
 import axios from 'axios'
 
 class LoginAreaRiservata extends Component {
@@ -29,6 +29,7 @@ class LoginAreaRiservata extends Component {
         .then(res => {
             if (res.status === 200) {
                 console.log(res);
+                document.cookie = "token=" + res.data + ";"
                 this.props.history.push('/docenti/area_riservata')
             } else {
                 const error = new Error(res.error)
@@ -40,19 +41,24 @@ class LoginAreaRiservata extends Component {
     }
 
     render() {
-        const { username, password } = this.state
-        return (
-            <div className="loginPage">
-                <h1>Login Form</h1>
-                <br/>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <input type="text" name="username" value={username} placeholder="Username" onChange={this.handleChange} />
-                    <br/><br/>
-                    <input type="password" name="password" value={password} placeholder="Password" onChange={this.handleChange} />
-                    <br/><br/>
-                    <button>Accedi</button>
-                    <br/><br/>
-                </form>
+
+        return(
+            <div className="pagLogin">
+                <center>
+                    <div className="login">
+                        <text>LOGIN DOCENTI UNICATT</text>
+                        <div className="form">
+                            <form name="form" onSubmit={this.handleSubmit}>
+                                <input className="input" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                                <input className="input" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                                <button id="button" type="submit" onClick={this.handleSubmit}>Login</button>
+                            </form>
+                        </div>
+                        <br /><a className="utility" href="">- CAMBIA PASSWORD</a> 
+                        <br /><a className="utility" href="">- PASSWORD SMARRITA?</a> 
+                        <br /><a className="utility" href="">- USERNAME SMARRITO?</a>
+                    </div>
+                </center>
             </div>
         )
     }
