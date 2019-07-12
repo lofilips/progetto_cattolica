@@ -1,8 +1,53 @@
-.loginPage {
+.pagLogin{
     min-height: 1000px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    padding: 10px;
+    background-image: url("../assets/bg.jpg");
+    background-size: 100% 100%;
+    z-index: -2;
+}
+
+.login{
+    background-color: #1362a7;
+    width: 25%;
+    height: 470px;
+    margin-top: 100px;
+    border: solid black 2px;
+    border-radius: 15px;
+}
+
+.form{
+    padding-top: 10px;
+}
+
+.input{
+    width: 90%;
+    height: 40px;
+    margin-top: 40px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+#button{
+    margin-top: 40px;
+    width: 25%;
+    height: 35px;
+    border-radius: 15px;
+}
+
+text{
+    margin-top: 50px;
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 1px 1px rgb(255, 255, 255);
+}
+
+.utility{
+    color: white;
+    float: left;
+    padding-left: 30px;
+}
+
+#ciaoUser {
+    padding: 0.5rem 1rem;
+    color: white;
 }

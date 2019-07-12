@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import '../css/Login.css'
+import '../css/LoginAreaRiservata.css'
 import axios from 'axios'
-
-
 
 function getCookieValue(cookieName){
 
-    if(document.cookie.split(";")[0] !== undefined){
+    if (document.cookie.split(";")[0] !== undefined) {
         for(let i = 0; i < document.cookie.split(";").length; i++){
             if(document.cookie.split(";")[i].includes(cookieName) && cookieName.length > 0){
 
@@ -16,8 +14,6 @@ function getCookieValue(cookieName){
         return null
       }
 }
-
-
 
 class LoginAreaRiservata extends Component {
 
@@ -89,13 +85,11 @@ class LoginAreaRiservata extends Component {
                             <div className="form">
                                 <form name="form" onSubmit={this.handleSubmit}>
                                     <input className="input" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                                    <input className="input" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                                    <input type="password" className="input" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}></input>
                                     <button id="button" type="submit" onClick={this.handleSubmit}>Login</button>
                                 </form>
                             </div>
                             <br /><a className="utility" href="">- CAMBIA PASSWORD</a> 
-                            <br /><a className="utility" href="">- PASSWORD SMARRITA?</a> 
-                            <br /><a className="utility" href="">- USERNAME SMARRITO?</a>
                         </div>
                     </center>
                 </div>
