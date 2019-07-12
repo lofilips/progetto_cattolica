@@ -26,9 +26,12 @@ app.post('/docenti/login_area_riservata', (req, res) => {
             const token = jwt.sign(payload, secret, {
                 expiresIn: '1h'
             });
-            // console.log('TOKEN '+ token);
-            res.send(token);
-            res.sendStatus(200)
+            // console.log('TOKEN '+ token);  
+            let cod = results[0].cod_docente 
+            let user = results[0].username_docente
+            console.log(cod)
+            res.append('Set-Cookie',['cod=' + cod + '; path=/;', 'user=' + user + '; path=/;'])                             
+            res.send(token)
         } else {
             console.log('Errore: utente non trovato')
         }

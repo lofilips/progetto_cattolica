@@ -114,12 +114,13 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
 
     loginDocente(username, password) {
         return new Promise((resolve, reject) => {
-            knex.select('cod_docente').from('login_docenti').where('cod_docente', username).andWhere('password_docente', password)
+            knex.select('username_docente','cod_docente').from('login_docenti').where('cod_docente', username).andWhere('password_docente', password)
             .on('query-error', error => console.log("QUERY ERROR: " + error))
             .then(rows => {
                 if (rows === undefined) {
                     reject(new Error("Rows is undefined"))
                 } else {
+                    console.log(rows)
                     resolve(rows)
                 }
             })
