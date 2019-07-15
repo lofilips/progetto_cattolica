@@ -51,7 +51,7 @@ function NavigationBar() {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ml-auto">
                                 <Nav.Item id="ciaoUser">CIAO {user}</Nav.Item>
-                                <Nav.Item><Nav.Link href="/docenti/area_riservata">AREA RISERVATA</Nav.Link></Nav.Item>
+                                <Nav.Item><Nav.Link href={"/docenti/profilo_docente/" + getCookieValue('cod')}>AREA RISERVATA</Nav.Link></Nav.Item>
                                 <Nav.Item><Nav.Link onClick={logout}>LOGOUT</Nav.Link></Nav.Item>
                             </Nav>
                         </Navbar.Collapse>
@@ -75,7 +75,7 @@ function NavigationBar() {
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ml-auto">
-                                <Nav.Item><Nav.Link href="/docenti/area_riservata">AREA RISERVATA</Nav.Link></Nav.Item>
+                                <Nav.Item><Nav.Link href="/docenti/login_area_riservata">AREA RISERVATA</Nav.Link></Nav.Item>
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>

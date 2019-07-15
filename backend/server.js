@@ -124,7 +124,7 @@ app.get('/docenti/insegnamenti2/:code', (req, res) => {
 app.get('/docenti/contenuto_profilo/:code', (req, res) => {
     docentiDB.getContenutoProfilo(req.params.code)
     .then(results => {
-        // console.log(results.data)
+        console.log(results.data)
         res.send(results)
     })
     .catch(err => {
@@ -145,7 +145,7 @@ app.put('/docenti/modifica_profilo/:code/:profile', (req, res) => {
 app.get('/docenti/contenuto_ricevimento/:code', (req, res) => {
     docentiDB.getContenutoRicevimento(req.params.code)
     .then(results => {
-        // console.log(results.data)
+        console.log(results.data)
         res.send(results)
     })
     .catch(err => {

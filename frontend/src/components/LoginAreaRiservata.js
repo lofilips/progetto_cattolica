@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '../css/LoginAreaRiservata.css'
 import axios from 'axios'
 
 function getCookieValue(cookieName){
@@ -79,7 +78,7 @@ class LoginAreaRiservata extends Component {
                     <br/>
                     <h1>CIAO {user},<br /> HAI ACCEDUTO CON SUCCESSO</h1>
                     <br/>
-                    <button onClick={() => window.location.href = '/docenti/area_riservata'}>Vai all'area riservata</button>
+                    <button onClick={() => window.location.href = '/docenti/profilo_docente/' + getCookieValue('cod')}>Vai all'area riservata</button>
                     <br/>
                     <br/>
                     <button onClick={() => window.location.href = '/docenti'}>Vai alla home</button>

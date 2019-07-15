@@ -9,8 +9,6 @@ import ListaDocenti from './components/ListaDocenti'
 import Footer from './components/Footer'
 import ProfiloDocente from './components/ProfiloDocente'
 import LoginAreaRiservata from './components/LoginAreaRiservata'
-import AreaRiservata from './components/AreaRiservata'
-import withAuth from './components/withAuth'
 
 class App extends Component {
 
@@ -24,7 +22,6 @@ class App extends Component {
               <Route exact path="/docenti" component = {Home} />
               <Route path="/docenti/lista_docenti" component = {ListaDocenti} />
               <Route path="/docenti/profilo_docente" component = {ProfiloDocente} />
-              <Route path="/docenti/area_riservata" component = {withAuth(AreaRiservata)} />
               <Route path="/docenti/login_area_riservata" component = {LoginAreaRiservata} />
               <Route component = {NoMatch} />
             </Switch>

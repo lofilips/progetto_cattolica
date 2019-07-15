@@ -1,10 +1,7 @@
 import React from 'react'
-import {Card, Row, Col, ListGroup, Container, Form, Button } from 'react-bootstrap'
+import { Card, Row, Col, ListGroup, Container, Form, Button } from 'react-bootstrap'
 import '../css/ProfiloDocente.css'
 import axios from 'axios'
-
-const url = document.location.href
-const stringaRicerca = url.split("/")[5]
 
 let active0 = true
 let active1 = false
@@ -30,13 +27,33 @@ let annoAcc = true
 let blackboard
 
 let visDettaglio = 'hidden'
+let visiModifica = 'none'
 
 let disAppelli = 'none'
 let disCalendario = 'none'
 let disOrario = 'none'
 let disProgramma = 'block'
 
-class ProfiloDocente extends React.Component {
+
+function getCookieValue(cookieName){
+
+    if(document.cookie.split(";")[0] !== undefined){
+        for(let i = 0; i < document.cookie.split(";").length; i++){
+            if(document.cookie.split(";")[i].includes(cookieName) && cookieName.length > 0){
+
+                return document.cookie.split(";")[i].split("=")[1]
+            }
+        }
+        return null
+      }
+}
+
+let stringaRicerca = document.location.href.split("/")[5]
+
+if(stringaRicerca !== undefined){
+stringaRicerca = stringaRicerca.includes("#") ? document.location.href.split("/")[5].split("#")[0] :  document.location.href.split("/")[5]
+}
+class AreaRiservata extends React.Component {
 
     constructor(props) {
         super(props)
@@ -45,13 +62,21 @@ class ProfiloDocente extends React.Component {
             immagine: false,
             insegnamenti: [],
             dettaglio: false,
-            profilo: "",
-            ricevimento: "",
+            profilo: [],
+            ricevimento: [],
+            contenutoProfilo: '',
+            contenutoRicevimento: '',
+            logged: false,
         }
         this.dettaglioDoc = this.dettaglioDoc.bind(this)
+        this.handleProfileChange = this.handleProfileChange.bind(this)
+        this.handleRicevimentoChange = this.handleRicevimentoChange.bind(this)
+        this.modificaProfilo = this.modificaProfilo.bind(this)
+        this.modificaRicevimento = this.modificaRicevimento.bind(this)
+        this.editMode = this.editMode.bind(this)
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         // console.log("stringaRicerca: " + stringaRicerca)
         await fetch('/docenti/profilo_docente/' + stringaRicerca)
             .then(res => {
@@ -87,10 +112,24 @@ class ProfiloDocente extends React.Component {
                 console.log('ERROR. Status Code: ' + res.status)
                 return
             }
+            console.log('STRINGA RICERCA: ' + stringaRicerca)
             return res.json();
         })
         .then(result => {
             this.setState(() => ({ insegnamenti: result }))
+        })
+        
+        await fetch('/docenti/contenuto_ricevimento/' + stringaRicerca)
+        .then(res => {
+            if (res.status !== 200) {
+                console.log('ERROR. Status Code: ' + res.status)
+                return
+            }
+            return res.json();
+        })
+        .then(result => {
+            this.setState(() => ({ ricevimento: result }))
+            this.setState({contenutoRicevimento: this.state.ricevimento[0].contenuto_ricevimento})
         })
 
         await fetch('/docenti/contenuto_profilo/' + stringaRicerca)
@@ -102,21 +141,8 @@ class ProfiloDocente extends React.Component {
             return res.json();
         })
         .then(result => {
-            //console.log(result[0].contenuto_profilo)
-            this.setState(() => ({ profilo: result[0].contenuto_profilo }))
-        })
-
-        await fetch('/docenti/contenuto_ricevimento/' + stringaRicerca)
-        .then(res => {
-            if (res.status !== 200) {
-                console.log('ERROR. Status Code: ' + res.status)
-                return
-            }
-            return res.json();
-        })
-        .then(result => {
-            //console.log(result[0].contenuto_ricevimento)
-            this.setState(() => ({ ricevimento: result[0].contenuto_ricevimento }))
+            this.setState(() => ({ profilo: result }))
+            this.setState({contenutoProfilo: this.state.profilo[0].contenuto_profilo})
         })
 
 
@@ -125,10 +151,8 @@ class ProfiloDocente extends React.Component {
 
     dettaglioDoc() {
         this.setState({dettaglio: !this.state.dettaglio})
-        console.log(this.state.dettaglio)
         visDettaglio = 'visible'
-        console.log(visDettaglio)
-
+        console.log("ciaone")
         this.forceUpdate()
     }
 
@@ -217,7 +241,62 @@ class ProfiloDocente extends React.Component {
         }
     }
 
+    handleProfileChange(event) {
+        this.setState({ contenutoProfilo: event.target.value })
+        console.log(this.state.contenutoProfilo)
+    }
+    
+    handleRicevimentoChange(event) {
+        this.setState({ contenutoRicevimento: event.target.value })
+        console.log(this.state.contenutoRicevimento)
+    }
+
+    modificaProfilo() {
+        console.log("contenuto profilo " + this.state.contenutoProfilo)
+
+        axios.put(`/docenti/modifica_profilo/${stringaRicerca}/${this.state.contenutoProfilo}`)
+        .then(res => {
+            console.log(res.status)
+        })
+        .catch(error => console.log(error))
+        this.setState({logged: false})
+        visiModifica = "block"
+        this.forceUpdate()
+        setTimeout(() => {
+            visiModifica = "none"
+            this.forceUpdate()
+        }, 3000);
+    }
+    
+    modificaRicevimento() {
+        console.log("contenuto ricevimento " + this.state.contenutoRicevimento)
+
+        axios.put(`/docenti/modifica_ricevimento/${stringaRicerca}/${this.state.contenutoRicevimento}`)
+        .then(res => {
+            console.log(res.status)
+        })
+        .catch(error => console.log(error))
+        this.setState({logged: false})
+        visiModifica = "block"
+        this.forceUpdate()
+        setTimeout(() => {
+            visiModifica = "none"
+            this.forceUpdate()
+        }, 3000);
+    }
+
+    editMode(){
+        if(getCookieValue('token') !== null && getCookieValue('user') !== null && getCookieValue('cod') === stringaRicerca ){
+            console.log(getCookieValue('cod') + " " + stringaRicerca)
+            this.setState({logged: true})
+            this.forceUpdate()
+        }else{
+            window.location.href = '/docenti/login_area_riservata'
+        }
+    }
+
     render() {
+        console.log(this.state.logged)
 
         let docente = []
 
@@ -238,7 +317,7 @@ class ProfiloDocente extends React.Component {
                                     <br/>
                                     {this.state.docenti[i].incarico_dir}
                                     <br/><br/>
-                                    <h6>Facoltà: {this.state.docenti[i].des_facolta}   -   {this.state.docenti[i].des_ssd}</h6>
+                                    <h6>{"Facoltà: " + this.state.docenti[i].des_facolta + " - " + this.state.docenti[i].des_ssd}</h6>
                                     <h6>{"Sede: " + this.state.docenti[i].des_sede}</h6>
                                     <h6>{"Ruolo: " + this.state.docenti[i].des_ruolo}</h6>
                                     <h6>{"Dipartimento: " + this.state.docenti[i].des_struttura_aff.toUpperCase()}</h6>
@@ -268,7 +347,6 @@ class ProfiloDocente extends React.Component {
         let insegnamento2018 = []
 
 
-
         for ( let i = 0 ; i < this.state.insegnamenti.length; i++) {
 
             if(this.state.insegnamenti[i].LINK_BB === ""){
@@ -279,7 +357,7 @@ class ProfiloDocente extends React.Component {
 
             if (this.state.insegnamenti[i].ANNO_ACCADEMICO === 2018) {
 
-                console.log(this.state.insegnamenti[i].ANNO_ACCADEMICO)
+                // console.log(this.state.insegnamenti[i].ANNO_ACCADEMICO)
                 insegnamento2018[i] = (
                         <Card.Text key={i}>
                             <br/>
@@ -300,6 +378,7 @@ class ProfiloDocente extends React.Component {
                             <br/><br/>
                             <hr/>
 
+                            
                             <div className="dettaglio" style={{visibility: visDettaglio}}>
                                 <div>
                                     <center><h5><strong>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</strong></h5></center>
@@ -334,7 +413,7 @@ class ProfiloDocente extends React.Component {
                 )
             } else if (this.state.insegnamenti[i].ANNO_ACCADEMICO === 2017){
 
-                console.log("-" + this.state.insegnamenti[i].ANNO_ACCADEMICO)
+                // console.log("-" + this.state.insegnamenti[i].ANNO_ACCADEMICO)
                 insegnamento2017[i] = (
                     <Card.Text key={i}>
                         <br/>
@@ -355,36 +434,37 @@ class ProfiloDocente extends React.Component {
                         <br/><br/>
                         <hr/>
 
+                        
                         <div className="dettaglio" style={{visibility: visDettaglio}}>
-                            <div>
-                                <center><h5><strong>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</strong></h5></center>
-                                <button id="buttonDettaglio" onClick={() => {visDettaglio = "hidden"; this.forceUpdate()}}><img id="imgDettaglio" src={require('../assets/x-mark.png')} alt="" /></button>
-                            </div>
-                            <hr />
-                            <div style={{width: "100%", height: "fit-content"}}>
-                                <button className="dettaglioButton" onClick={() => {disProgramma = 'block'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Programma del corso</button>
-                                <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'block'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Orario lezione</button>
-                                <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'block'; disCalendario = 'none'; this.forceUpdate()}}>Appelli</button>
-                                <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'block'; this.forceUpdate()}}>Calendario aula lezioni</button>
-                            </div>
-                            <hr />
+                                <div>
+                                    <center><h5><strong>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</strong></h5></center>
+                                    <button id="buttonDettaglio" onClick={() => {visDettaglio = "hidden"; this.forceUpdate()}}><img id="imgDettaglio" src={require('../assets/x-mark.png')} alt="" /></button>
+                                </div>
+                                <hr />
+                                <div style={{width: "100%", height: "fit-content"}}>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'block'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Programma del corso</button>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'block'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Orario lezione</button>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'block'; disCalendario = 'none'; this.forceUpdate()}}>Appelli</button>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'block'; this.forceUpdate()}}>Calendario aula lezioni</button>
+                                </div>
+                                <hr />
 
-                            <div className="dettaglioDettaglio" style={{display: disProgramma}}>
-                                {this.state.insegnamenti[i].LINK_PROGRAMMA === "" ? "Nessun programma trovato per questo corso" : this.state.insegnamenti[i].LINK_PROGRAMMA}
-                            </div>
+                                <div className="dettaglioDettaglio" style={{display: disProgramma}}>
+                                    {this.state.insegnamenti[i].LINK_PROGRAMMA === "" ? "Nessun programma trovato per questo corso" : this.state.insegnamenti[i].LINK_PROGRAMMA}
+                                </div>
 
-                            <div className="dettaglioDettaglio" style={{display: disOrario}}>
-                            {this.state.insegnamenti[i].LINK_ORARI === "" ? "Nessun orario trovato per questo corso" : this.state.insegnamenti[i].LINK_ORARI}
-                            </div>
+                                <div className="dettaglioDettaglio" style={{display: disOrario}}>
+                                {this.state.insegnamenti[i].LINK_ORARI === "" ? "Nessun orario trovato per questo corso" : this.state.insegnamenti[i].LINK_ORARI}
+                                </div>
 
-                            <div className="dettaglioDettaglio" style={{display: disAppelli}}>
-                            {this.state.insegnamenti[i].LINK_APPELLI === "" ? "Nessun appello trovato per questo corso" : this.state.insegnamenti[i].LINK_APPELLI}
-                            </div>
+                                <div className="dettaglioDettaglio" style={{display: disAppelli}}>
+                                {this.state.insegnamenti[i].LINK_APPELLI === "" ? "Nessun appello trovato per questo corso" : this.state.insegnamenti[i].LINK_APPELLI}
+                                </div>
 
-                            <div className="dettaglioDettaglio" style={{display: disCalendario}}>
-                                Dettaglio calendario aula lezioni
+                                <div className="dettaglioDettaglio" style={{display: disCalendario}}>
+                                    Dettaglio calendario aula lezioni
+                                </div>
                             </div>
-                        </div>
                     </Card.Text>
             )
 
@@ -392,8 +472,39 @@ class ProfiloDocente extends React.Component {
                 
         }
 
-        if (this.state.immagine) {
+        let contenutoProfilo = []
+        let contenutoRicevimento = []
 
+
+     
+
+        for (let i = 0; i < this.state.profilo.length; i++) {
+            contenutoProfilo[i] = (
+                <Form.Group key={i}>
+                    <Form.Control as="textarea" rows="20" readOnly={!this.state.logged} value={this.state.contenutoProfilo} onChange={this.handleProfileChange}>{this.state.contenutoProfilo}</Form.Control>
+                    <br/>
+                    <Button variant="primary" onClick={this.modificaProfilo} style={this.state.logged === false ? {display:"none"} : {display: "block"}}>Conferma modifica</Button>  
+                    <br />
+                    <br />
+                    <div style={{color: "green", display: visiModifica}}>Modifica effettuata con successo <img src={require('../assets/confirm.png')} style={{width: "20px"}} alt=""/></div>
+                </Form.Group>
+            )
+        }
+
+        for (let i = 0; i < this.state.ricevimento.length; i++) {
+            contenutoRicevimento[i] = (
+                <Form.Group key={i}>
+                    <Form.Control as="textarea" rows="20" readOnly={!this.state.logged} value={this.state.contenutoRicevimento} onChange={this.handleRicevimentoChange}>{this.state.contenutoRicevimento}}</Form.Control>
+                    <br/>
+                    <Button variant="primary" onClick={this.modificaRicevimento} style={this.state.logged === false ? {display:"none"} : {display: "block"}}>Conferma modifica</Button>  
+                    <br />
+                    <br />
+                    <div style={{color: "green", display: visiModifica}}>Modifica effettuata con successo <img src={require('../assets/confirm.png')} style={{width: "20px"}} alt=""/></div>
+                </Form.Group>
+            )
+        }
+
+        if (this.state.immagine) {
             return (
             <div className="pagRicerca">
                 {docente}
@@ -411,14 +522,13 @@ class ProfiloDocente extends React.Component {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>
-                                        <h3><b>Profilo</b></h3>
+                                        <h3><b>Profilo</b></h3> <Button className="editButton" variant="primary" style={getCookieValue('token') === null ? {display:"none"} : {display: "block"}} onClick={this.editMode}>Modifica...</Button>
                                         <br/>
                                         <hr/>
                                     </Card.Title>
-                                    <Card.Text style={{minHeight: "420px"}}>
+                                    <Card.Text>
                                         <br/>
-                                        {this.state.profilo}
-                                        <br/><br/>
+                                        {contenutoProfilo}
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
@@ -447,13 +557,13 @@ class ProfiloDocente extends React.Component {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>
-                                        <h3><b>Ricevimento</b></h3>
+                                        <h3><b>Ricevimento</b></h3> <Button className="editButton" variant="primary" style={getCookieValue('token') === null ? {display:"none"} : {display: "block"}} onClick={this.editMode}>Modifica...</Button>
                                         <br/>
                                         <hr/>
                                     </Card.Title>
-                                    <Card.Text style={{minHeight: "420px"}}>
+                                    <Card.Text>
                                         <br/>
-                                        {this.state.ricevimento}
+                                        {contenutoRicevimento}
                                         <br/><br/>
                                     </Card.Text>
                                 </Card.Body>
@@ -488,4 +598,4 @@ class ProfiloDocente extends React.Component {
 
 }
 
-export default ProfiloDocente
+export default AreaRiservata
