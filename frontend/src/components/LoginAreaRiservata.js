@@ -60,11 +60,6 @@ class LoginAreaRiservata extends Component {
 
     }
 
-    componentDidMount(){
-        if(getCookieValue('token') !== null && getCookieValue('user') !== null){
-            window.location.href = '/docenti/area_riservata'
-        }
-    }
 
 
     render() {

@@ -160,4 +160,36 @@ module.exports = class MysqlDocentiDB extends DocentiDB {
         })
     }
 
+    getContenutoRicevimento(code) {
+        return new Promise((resolve, reject) => {
+            knex.select('contenuto_ricevimento').from('login_docenti').where('cod_docente', code)
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
+            .then(rows => {
+                if (rows === undefined) {
+                    reject(new Error("Rows is undefined"))
+                } else {
+                    console.log(rows)
+                    resolve(rows)
+                }
+            })
+            .catch(error => console.log('ERRORE: ' + error))
+        })
+    }
+
+    setContenutoRicevimento(code, ricevimento) {
+        return new Promise((resolve, reject) => {
+            knex('login_docenti').update('contenuto_ricevimento', ricevimento).where('cod_docente', code)
+            .on('query-error', error => console.log("QUERY ERROR: " + error))
+            .then(rows => {
+                if (rows === undefined) {
+                    reject(new Error("Rows is undefined"))
+                } else {
+                    console.log(rows)
+                    resolve(rows)
+                }
+            })
+            .catch(error => console.log('ERRORE: ' + error))
+        })
+    }
+
 }

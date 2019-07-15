@@ -38,6 +38,13 @@ module.exports = class DocentiDB {
             throw new Error('Metodo non definito');
         }
         
+        if (!this.getContenutoRicevimento) {
+            throw new Error('Metodo non definito');
+        }
+
+        if (!this.setContenutoRicevimento) {
+            throw new Error('Metodo non definito');
+        }
     }
 
 }

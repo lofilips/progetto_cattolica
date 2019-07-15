@@ -89,26 +89,31 @@ opzioniProfilo {
 .dettaglio {
     width:50%;
     height: 500px;
-    background-color: grey; 
-    position: absolute; 
+    background-color: white; 
+    position: fixed; 
     top: 200px; 
     left: 25%;
+    padding: 10px;
+    border: solid black 2px;
+    border-radius: 7.5px;
+    z-index: 10;
 }
 
 #buttonDettaglio{
     position: absolute;
     top: 0;
     right: 0;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
     margin: 0;
     padding: 0;
     border: none;
+    background-color: white; 
 }
 
 #imgDettaglio{
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
     margin: 0;
     padding: 0;
     vertical-align: baseline;
@@ -116,4 +121,12 @@ opzioniProfilo {
 
 #buttonDettaglio:focus{
     outline: none;
+}
+
+.dettaglioButton{
+    border: none;
+    position: relative;
+    width: 25%;
+    height: 100%;
+    background-color: white;
 }

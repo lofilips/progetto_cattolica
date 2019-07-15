@@ -31,6 +31,11 @@ let blackboard
 
 let visDettaglio = 'hidden'
 
+let disAppelli = 'none'
+let disCalendario = 'none'
+let disOrario = 'none'
+let disProgramma = 'block'
+
 class ProfiloDocente extends React.Component {
 
     constructor(props) {
@@ -40,7 +45,8 @@ class ProfiloDocente extends React.Component {
             immagine: false,
             insegnamenti: [],
             dettaglio: false,
-            profilo: ""
+            profilo: "",
+            ricevimento: "",
         }
         this.dettaglioDoc = this.dettaglioDoc.bind(this)
     }
@@ -98,6 +104,19 @@ class ProfiloDocente extends React.Component {
         .then(result => {
             //console.log(result[0].contenuto_profilo)
             this.setState(() => ({ profilo: result[0].contenuto_profilo }))
+        })
+
+        await fetch('/docenti/contenuto_ricevimento/' + stringaRicerca)
+        .then(res => {
+            if (res.status !== 200) {
+                console.log('ERROR. Status Code: ' + res.status)
+                return
+            }
+            return res.json();
+        })
+        .then(result => {
+            //console.log(result[0].contenuto_ricevimento)
+            this.setState(() => ({ ricevimento: result[0].contenuto_ricevimento }))
         })
 
 
@@ -219,7 +238,7 @@ class ProfiloDocente extends React.Component {
                                     <br/>
                                     {this.state.docenti[i].incarico_dir}
                                     <br/><br/>
-                                    <h6>{"Facoltà: " + this.state.docenti[i].des_facolta + " - " + this.state.docenti[i].des_ssd}</h6>
+                                    <h6>Facoltà: {this.state.docenti[i].des_facolta}   -   {this.state.docenti[i].des_ssd}</h6>
                                     <h6>{"Sede: " + this.state.docenti[i].des_sede}</h6>
                                     <h6>{"Ruolo: " + this.state.docenti[i].des_ruolo}</h6>
                                     <h6>{"Dipartimento: " + this.state.docenti[i].des_struttura_aff.toUpperCase()}</h6>
@@ -247,6 +266,7 @@ class ProfiloDocente extends React.Component {
 
         let insegnamento2017 = []
         let insegnamento2018 = []
+
 
 
         for ( let i = 0 ; i < this.state.insegnamenti.length; i++) {
@@ -279,6 +299,37 @@ class ProfiloDocente extends React.Component {
                             </Container>
                             <br/><br/>
                             <hr/>
+
+                            <div className="dettaglio" style={{visibility: visDettaglio}}>
+                                <div>
+                                    <center><h5><strong>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</strong></h5></center>
+                                    <button id="buttonDettaglio" onClick={() => {visDettaglio = "hidden"; this.forceUpdate()}}><img id="imgDettaglio" src={require('../assets/x-mark.png')} alt="" /></button>
+                                </div>
+                                <hr />
+                                <div style={{width: "100%", height: "fit-content"}}>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'block'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Programma del corso</button>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'block'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Orario lezione</button>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'block'; disCalendario = 'none'; this.forceUpdate()}}>Appelli</button>
+                                    <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'block'; this.forceUpdate()}}>Calendario aula lezioni</button>
+                                </div>
+                                <hr />
+
+                                <div className="dettaglioDettaglio" style={{display: disProgramma}}>
+                                    {this.state.insegnamenti[i].LINK_PROGRAMMA === "" ? "Nessun programma trovato per questo corso" : this.state.insegnamenti[i].LINK_PROGRAMMA}
+                                </div>
+
+                                <div className="dettaglioDettaglio" style={{display: disOrario}}>
+                                {this.state.insegnamenti[i].LINK_ORARI === "" ? "Nessun orario trovato per questo corso" : this.state.insegnamenti[i].LINK_ORARI}
+                                </div>
+
+                                <div className="dettaglioDettaglio" style={{display: disAppelli}}>
+                                {this.state.insegnamenti[i].LINK_APPELLI === "" ? "Nessun appello trovato per questo corso" : this.state.insegnamenti[i].LINK_APPELLI}
+                                </div>
+
+                                <div className="dettaglioDettaglio" style={{display: disCalendario}}>
+                                    Dettaglio calendario aula lezioni
+                                </div>
+                            </div>
                         </Card.Text>
                 )
             } else if (this.state.insegnamenti[i].ANNO_ACCADEMICO === 2017){
@@ -303,6 +354,37 @@ class ProfiloDocente extends React.Component {
                         </Container>
                         <br/><br/>
                         <hr/>
+
+                        <div className="dettaglio" style={{visibility: visDettaglio}}>
+                            <div>
+                                <center><h5><strong>{this.state.insegnamenti[i].DES_INSEGNAMENTO_ITA}</strong></h5></center>
+                                <button id="buttonDettaglio" onClick={() => {visDettaglio = "hidden"; this.forceUpdate()}}><img id="imgDettaglio" src={require('../assets/x-mark.png')} alt="" /></button>
+                            </div>
+                            <hr />
+                            <div style={{width: "100%", height: "fit-content"}}>
+                                <button className="dettaglioButton" onClick={() => {disProgramma = 'block'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Programma del corso</button>
+                                <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'block'; disAppelli = 'none'; disCalendario = 'none'; this.forceUpdate()}}>Orario lezione</button>
+                                <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'block'; disCalendario = 'none'; this.forceUpdate()}}>Appelli</button>
+                                <button className="dettaglioButton" onClick={() => {disProgramma = 'none'; disOrario = 'none'; disAppelli = 'none'; disCalendario = 'block'; this.forceUpdate()}}>Calendario aula lezioni</button>
+                            </div>
+                            <hr />
+
+                            <div className="dettaglioDettaglio" style={{display: disProgramma}}>
+                                {this.state.insegnamenti[i].LINK_PROGRAMMA === "" ? "Nessun programma trovato per questo corso" : this.state.insegnamenti[i].LINK_PROGRAMMA}
+                            </div>
+
+                            <div className="dettaglioDettaglio" style={{display: disOrario}}>
+                            {this.state.insegnamenti[i].LINK_ORARI === "" ? "Nessun orario trovato per questo corso" : this.state.insegnamenti[i].LINK_ORARI}
+                            </div>
+
+                            <div className="dettaglioDettaglio" style={{display: disAppelli}}>
+                            {this.state.insegnamenti[i].LINK_APPELLI === "" ? "Nessun appello trovato per questo corso" : this.state.insegnamenti[i].LINK_APPELLI}
+                            </div>
+
+                            <div className="dettaglioDettaglio" style={{display: disCalendario}}>
+                                Dettaglio calendario aula lezioni
+                            </div>
+                        </div>
                     </Card.Text>
             )
 
@@ -369,9 +451,9 @@ class ProfiloDocente extends React.Component {
                                         <br/>
                                         <hr/>
                                     </Card.Title>
-                                    <Card.Text>
+                                    <Card.Text style={{minHeight: "420px"}}>
                                         <br/>
-                                        Contenuto ricevimento...
+                                        {this.state.ricevimento}
                                         <br/><br/>
                                     </Card.Text>
                                 </Card.Body>
@@ -395,10 +477,6 @@ class ProfiloDocente extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="dettaglio" style={{visibility: visDettaglio}}>
-                    <button id="buttonDettaglio" onClick={() => {visDettaglio = "hidden"; this.forceUpdate()}}><img id="imgDettaglio" src={require('../assets/x-mark.png')} alt="" /></button>
-                    Qua va implementato il dettaglio insegnamenti
-                </div>
             </div>  
             )
         } else {
