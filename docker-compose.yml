@@ -1,0 +1,28 @@
+version: '3'
+services:
+  frontend:
+    image: node:10
+    build: './frontend'
+    ports:
+      - "4000:3000"
+    environment:
+      APP_ENV: 'development'
+    links:
+      - backend
+
+  backend:
+    image: node:10
+    build: './backend'
+    links:
+      - db
+
+  db:
+    image: mysql:5
+    build:
+      context: ./script_utilita
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_DATABASE: process.env.DATABASE_SQL
+      MYSQL_USER: process.env.DBUSER
+      MYSQL_PASSWORD: process.env.DBPASSWORD
+      MYSQL_ROOT_PASSWORD: process.env.DBROOTPASSWORD

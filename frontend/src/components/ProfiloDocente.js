@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Row, Col, ListGroup, Container, Form, Button } from 'react-bootstrap'
 import '../css/ProfiloDocente.css'
 import axios from 'axios'
+import RichTextArea from './RichTextArea'
 
 let active0 = true
 let active1 = false
@@ -34,10 +35,8 @@ let disCalendario = 'none'
 let disOrario = 'none'
 let disProgramma = 'block'
 
-
 function getCookieValue(cookieName){
-
-    if(document.cookie.split(";")[0] !== undefined){
+    if (document.cookie.split(";")[0] !== undefined) {
         for(let i = 0; i < document.cookie.split(";").length; i++){
             if(document.cookie.split(";")[i].includes(cookieName) && cookieName.length > 0){
 
@@ -48,12 +47,13 @@ function getCookieValue(cookieName){
       }
 }
 
-let stringaRicerca = document.location.href.split("/")[5]
+let codDocente = document.location.href.split("/")[5]
 
-if(stringaRicerca !== undefined){
-stringaRicerca = stringaRicerca.includes("#") ? document.location.href.split("/")[5].split("#")[0] :  document.location.href.split("/")[5]
+if (codDocente !== undefined) {
+    codDocente = codDocente.includes("#") ? document.location.href.split("/")[5].split("#")[0] :  document.location.href.split("/")[5]
 }
-class AreaRiservata extends React.Component {
+
+class ProfiloDocente extends React.Component {
 
     constructor(props) {
         super(props)
@@ -71,14 +71,13 @@ class AreaRiservata extends React.Component {
         this.dettaglioDoc = this.dettaglioDoc.bind(this)
         this.handleProfileChange = this.handleProfileChange.bind(this)
         this.handleRicevimentoChange = this.handleRicevimentoChange.bind(this)
-        this.modificaProfilo = this.modificaProfilo.bind(this)
         this.modificaRicevimento = this.modificaRicevimento.bind(this)
         this.editMode = this.editMode.bind(this)
     }
 
     async componentDidMount() {
-        // console.log("stringaRicerca: " + stringaRicerca)
-        await fetch('/docenti/profilo_docente/' + stringaRicerca)
+        // console.log("codDocente: " + codDocente)
+        await fetch('/docenti/profilo_docente/' + codDocente)
             .then(res => {
                 if (res.status !== 200) {
                     console.log('ERROR. Status Code: ' + res.status)
@@ -91,7 +90,7 @@ class AreaRiservata extends React.Component {
                 this.setState(() => ({ docenti: result }))
             })
             
-        await axios.get('/docenti/foto_docente/' + stringaRicerca)
+        await axios.get('/docenti/foto_docente/' + codDocente)
         .then(res => {
             console.log(res)
             if (res.data.base64Foto === null){ 
@@ -106,20 +105,20 @@ class AreaRiservata extends React.Component {
             console.log("ERRORE: " + error);
         })
 
-        await fetch('/docenti/insegnamenti2/' + stringaRicerca)
+        await fetch('/docenti/insegnamenti2/' + codDocente)
         .then(res => {
             if (res.status !== 200) {
                 console.log('ERROR. Status Code: ' + res.status)
                 return
             }
-            console.log('STRINGA RICERCA: ' + stringaRicerca)
+            console.log('STRINGA RICERCA: ' + codDocente)
             return res.json();
         })
         .then(result => {
             this.setState(() => ({ insegnamenti: result }))
         })
         
-        await fetch('/docenti/contenuto_ricevimento/' + stringaRicerca)
+        await fetch('/docenti/contenuto_ricevimento/' + codDocente)
         .then(res => {
             if (res.status !== 200) {
                 console.log('ERROR. Status Code: ' + res.status)
@@ -132,7 +131,7 @@ class AreaRiservata extends React.Component {
             this.setState({contenutoRicevimento: this.state.ricevimento[0].contenuto_ricevimento})
         })
 
-        await fetch('/docenti/contenuto_profilo/' + stringaRicerca)
+        await fetch('/docenti/contenuto_profilo/' + codDocente)
         .then(res => {
             if (res.status !== 200) {
                 console.log('ERROR. Status Code: ' + res.status)
@@ -144,7 +143,6 @@ class AreaRiservata extends React.Component {
             this.setState(() => ({ profilo: result }))
             this.setState({contenutoProfilo: this.state.profilo[0].contenuto_profilo})
         })
-
 
         this.forceUpdate()
     }
@@ -243,35 +241,18 @@ class AreaRiservata extends React.Component {
 
     handleProfileChange(event) {
         this.setState({ contenutoProfilo: event.target.value })
-        console.log(this.state.contenutoProfilo)
+        // console.log(this.state.contenutoProfilo)
     }
     
     handleRicevimentoChange(event) {
         this.setState({ contenutoRicevimento: event.target.value })
-        console.log(this.state.contenutoRicevimento)
-    }
-
-    modificaProfilo() {
-        console.log("contenuto profilo " + this.state.contenutoProfilo)
-
-        axios.put(`/docenti/modifica_profilo/${stringaRicerca}/${this.state.contenutoProfilo}`)
-        .then(res => {
-            console.log(res.status)
-        })
-        .catch(error => console.log(error))
-        this.setState({logged: false})
-        visiModifica = "block"
-        this.forceUpdate()
-        setTimeout(() => {
-            visiModifica = "none"
-            this.forceUpdate()
-        }, 3000);
+        // console.log(this.state.contenutoRicevimento)
     }
     
     modificaRicevimento() {
-        console.log("contenuto ricevimento " + this.state.contenutoRicevimento)
+        // console.log("contenuto ricevimento " + this.state.contenutoRicevimento)
 
-        axios.put(`/docenti/modifica_ricevimento/${stringaRicerca}/${this.state.contenutoRicevimento}`)
+        axios.put(`/docenti/modifica_ricevimento/${codDocente}/${this.state.contenutoRicevimento}`)
         .then(res => {
             console.log(res.status)
         })
@@ -286,11 +267,11 @@ class AreaRiservata extends React.Component {
     }
 
     editMode(){
-        if(getCookieValue('token') !== null && getCookieValue('user') !== null && getCookieValue('cod') === stringaRicerca ){
-            console.log(getCookieValue('cod') + " " + stringaRicerca)
+        if (getCookieValue('token') !== null && getCookieValue('user') !== null && getCookieValue('cod') === codDocente ) {
+            console.log(getCookieValue('cod') + " " + codDocente)
             this.setState({logged: true})
             this.forceUpdate()
-        }else{
+        } else {
             window.location.href = '/docenti/login_area_riservata'
         }
     }
@@ -346,10 +327,9 @@ class AreaRiservata extends React.Component {
         let insegnamento2017 = []
         let insegnamento2018 = []
 
-
         for ( let i = 0 ; i < this.state.insegnamenti.length; i++) {
 
-            if(this.state.insegnamenti[i].LINK_BB === ""){
+            if(this.state.insegnamenti[i].LINK_BB === "") {
                 blackboard = "hidden"
             } else {
                 blackboard = "visible"
@@ -377,7 +357,6 @@ class AreaRiservata extends React.Component {
                             </Container>
                             <br/><br/>
                             <hr/>
-
                             
                             <div className="dettaglio" style={{visibility: visDettaglio}}>
                                 <div>
@@ -475,20 +454,23 @@ class AreaRiservata extends React.Component {
         let contenutoProfilo = []
         let contenutoRicevimento = []
 
-
-     
-
         for (let i = 0; i < this.state.profilo.length; i++) {
-            contenutoProfilo[i] = (
-                <Form.Group key={i}>
-                    <Form.Control as="textarea" rows="20" readOnly={!this.state.logged} value={this.state.contenutoProfilo} onChange={this.handleProfileChange}>{this.state.contenutoProfilo}</Form.Control>
-                    <br/>
-                    <Button variant="primary" onClick={this.modificaProfilo} style={this.state.logged === false ? {display:"none"} : {display: "block"}}>Conferma modifica</Button>  
-                    <br />
-                    <br />
-                    <div style={{color: "green", display: visiModifica}}>Modifica effettuata con successo <img src={require('../assets/confirm.png')} style={{width: "20px"}} alt=""/></div>
-                </Form.Group>
-            )
+            if (!this.state.logged) {
+                contenutoProfilo[i] = (
+                    <Form.Group key={i}>
+                        <Form.Control as="textarea" rows="20" readOnly={!this.state.logged} value={this.state.contenutoProfilo} onChange={this.handleProfileChange}>{this.state.contenutoProfilo}</Form.Control>
+                        <br/>
+                        <Button variant="primary" onClick={this.modificaProfilo} style={this.state.logged === false ? {display:"none"} : {display: "block"}}>Conferma modifica</Button>  
+                    </Form.Group>
+                )
+            } else {
+                contenutoProfilo[i] = (
+                    <Form.Group key={i}>
+                        <RichTextArea />
+                        <br/>
+                    </Form.Group>
+                )
+            }
         }
 
         for (let i = 0; i < this.state.ricevimento.length; i++) {
@@ -598,4 +580,4 @@ class AreaRiservata extends React.Component {
 
 }
 
-export default AreaRiservata
+export default ProfiloDocente
