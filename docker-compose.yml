@@ -1,23 +1,23 @@
 version: '3'
 services:
   frontend:
-    image: node:10
+    image: progetto_cattolica_frontend
     build: './frontend'
-    ports:
-      - "4000:3000"
+    # ports:
+      # - "4000:3000"
     environment:
       APP_ENV: 'development'
     links:
       - backend
 
   backend:
-    image: node:10
+    image: progetto_cattolica_backend
     build: './backend'
     links:
       - db
 
   db:
-    image: mysql:5
+    image: progetto_cattolica_db
     build:
       context: ./script_utilita
       dockerfile: Dockerfile
